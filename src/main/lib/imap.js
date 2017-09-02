@@ -8,77 +8,65 @@ module.exports = class {
         password,
         host,
         port,
-        secure = true //使用安全传输协议
+        secure = true, //使用安全传输协议,
+        debug = false
     }){
         this._imap = new Imap({
             user,
             password,
             host,
             port,
-            secure,
+            tls : secure,
             tlsOptions: { rejectUnauthorized : false } ,//禁用对证书有效性的检查
-            // debug      : function (x) {console.log(x);}
+            debug : (info) => {
+                if(debug) {
+                    console.log(info);
+                }
+            }
           });
     }
 
-    /**
-     * 
-     * @param {fitter} like  ['UNSEEN', ['SINCE', 'May 20, 2017']]
-     */
-    async  async(box, filter) {
-        let emailList = await this._search(box, filter);
+    async list(box, filter, callback){
+        await this._connect(this._imap);
+        await new Promise((resolve, reject) => {
+            this._imap.openBox(box, true, (err, data) => {
+                if(err != undefined) return reject(err);
+                return resolve(data);
+            });
+        });
+
+        let emailList = await new Promise((resolve, reject) => {
+            this._imap.search(filter, function(err, results) {
+                if(err != undefined) return reject(err);
+                return resolve(results);
+            });
+        });
 
         return await new Promise((resolve, reject) => {
             let that = this;
-            let incomming = this._imap.fetch(emailList, { bodies: '' });
+            let incomming = this._imap.fetch(emailList, { bodies: ['HEADER'] });
             let outgoing = [];
             incomming.on('message', function(msg, seqno) {
-                let mailparser = new MailParser();
                 let emailObj = {};
-                msg.on('body', function(stream, info) {
-                    stream.pipe(mailparser);
-
-                    mailparser.on("headers", function(headers) {
-                        emailObj.headers = {
-                            subject :  headers.get('subject'),
-                            from : headers.get('from').text,
-                            to : headers.get('to').text,
-                            messageId : headers.get('message-id'),
-                            date : headers.get('date').getTime(),
-                            cc : headers.get('cc'),
-                            bcc : headers.get('bcc')
-                            // replyTo : headers.get('reply_to').text,
-                            // deliveredTo : headers.get('delivered_to').text,
-                            // returnPath : headers.get('return_path').text,
-                        }
-                    });
-
-
-                    mailparser.on("data", function(data) {
-                        switch(data.type){
-                            case 'text':
-                                emailObj.content = data.html;
-                                break;
-                            case 'attachment':
-                                if(!(emailObj.attachment instanceof Array)){
-                                    emailObj.attachment = [];
-                                }
-                                emailObj.attachment.push({
-                                    contentType : data.contentType,
-                                    name : data.filename
-                                })
-                                data.release();
-                                break;
-                        }
-                    });
-
-                    mailparser.on("end", function() {
-                        outgoing.push(emailObj);
+                msg.on('body', async (stream, info) => {
+                    let parser = require('mailparser').simpleParser;
+                    await parser(stream).then(mail=>{
+                        emailObj = Object.assign(emailObj, mail);
+                        outgoing.push({
+                            uid : emailObj.uid,
+                            state : true,
+                            data : emailObj
+                        });
+                        callback(null, emailObj.uid);
                         if(outgoing.length == emailList.length){
                             return resolve(outgoing);
                         }
-                    });
-
+                    }).catch(err=>{
+                        outgoing.push({
+                            uid : emailObj.uid,
+                            state : false
+                        });
+                    })
                 });
 
                 msg.once('end', function() {
@@ -100,22 +88,7 @@ module.exports = class {
         });
     }
 
-
-    async getBox(){
-        await this._connect(this._imap);
-        return await new Promise((resolve, reject) => {
-            this._imap.getBoxes((err, boxes) => {
-                if(err != undefined) return reject(err);
-                return resolve(boxes);
-            });
-        }).then((boxes) => {
-            this._imap.end();
-            return boxes;
-        });
-    }
-
-    //一定要注意附件的文件名要存在,否则函数永远无法返回,todo优化
-    async downloadAttachment(box, uid, saveFileInfo){
+    async  getDetail(box, uid) {
         await this._connect(this._imap);
         await new Promise((resolve, reject) => {
             this._imap.openBox(box, true, (err, data) => {
@@ -129,36 +102,20 @@ module.exports = class {
             let incomming = this._imap.fetch([uid], { bodies: '' });
             let outgoing = [];
             incomming.on('message', function(msg, seqno) {
-                let mailparser = new MailParser();
-                let downloadResult = {};
-                msg.on('body', function(stream, info) {
-                    stream.pipe(mailparser);
-        
-                    mailparser.on("data", function(data) {
-                        switch(data.type){
-                            case 'attachment':
-                                if(Object.keys(saveFileInfo).indexOf(data.filename) != -1) {
-                                    downloadResult.filename = data.filename;
-                                    downloadResult.status = 1; 
-                                    data.content.pipe(fs.createWriteStream(saveFileInfo[data.filename]));
-                                }
-                                data.release();
-                                break;
-                        }
-                    });
+                let emailObj = {};
+                msg.on('body', async(stream, info) => {
+                    let parser = require('mailparser').simpleParser;
+                    await parser(stream).then(mail=>{
+                        emailObj = Object.assign(emailObj, mail);
+                        return resolve(emailObj);
+                    }).catch(err=>{
+                        return reject(err);
+                    })
+                });
 
-                    mailparser.on("end", function() {
-                        outgoing.push(downloadResult);
-                        if(outgoing.length == Object.keys(saveFileInfo).length){
-                            return resolve(outgoing);
-                        }
-                    });
-
-                    mailparser.on("error", function(err) {
-                        downloadResult.status = 0; //download failed
-                        downloadResult.error = err;
-                    });
-
+                msg.once('attributes', function(attrs) {
+                    emailObj.uid = attrs.uid; //邮件id
+                    emailObj.flags = attrs.flags; //邮件标记
                 });
 
                 msg.once('end', function() {
@@ -172,6 +129,35 @@ module.exports = class {
             incomming.once('end', function(imap) {
                 that._imap.end();
             });
+        }); 
+    }
+
+    async verify(){
+        try {
+            let err = await this._connect(this._imap);
+            this._imap.end();
+            return {
+                state : 0
+            }
+        }
+        catch (err){
+            return {
+                state : 1,
+                message : err.message
+            }
+        }
+    }
+
+    async getBox(){
+        await this._connect(this._imap);
+        return await new Promise((resolve, reject) => {
+            this._imap.getBoxes((err, boxes) => {
+                if(err != undefined) return reject(err);
+                return resolve(boxes);
+            });
+        }).then((boxes) => {
+            this._imap.end();
+            return boxes;
         });
     }
 

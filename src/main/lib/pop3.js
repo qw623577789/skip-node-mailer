@@ -1,5 +1,4 @@
 const Pop = require('node-poplib-gowhich').Client;
-const fs = require("fs")
 
 module.exports = class {
     constructor({
@@ -8,12 +7,14 @@ module.exports = class {
         host,
         port,
         secure = true, //使用安全传输协议
+        debug = false
     }){
         this._user = user;
         this._password = password;
         this._host = host;
         this._port = port;
         this._secure = secure;
+        this._debug = debug;
     }
 
     async  list() {
@@ -76,6 +77,22 @@ module.exports = class {
         return outgoing;
     }
 
+    async verify(){
+        try {
+            let pop = await this._connect();
+            pop.quit();
+            return {
+                state : 0
+            }
+        }
+        catch (err){
+            return {
+                state : 1,
+                message : err.message
+            }
+        }
+    }
+
     async  delete(uid) {
         let pop = await this._connect();
         return await new Promise((resolve, reject) => {
@@ -101,7 +118,7 @@ module.exports = class {
             mailparser: true,
             username: this._user,
             password: this._password,
-            debug : true
+            debug : this._debug
           });
 
         return new Promise((resolve, reject) => {
