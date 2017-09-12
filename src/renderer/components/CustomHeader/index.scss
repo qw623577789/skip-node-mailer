@@ -1,0 +1,44 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.header {
+    width:  100%;
+    height: $head-height;
+    background-color: $grey-deep;
+    -webkit-app-region: drag
+}
+
+.window-btns {
+    position: relative;
+    display: block;
+    float: right;
+    z-index: 200;
+    padding: 0px 5px;
+    line-height: $head-height;
+    .window-btn {
+      -webkit-app-region: no-drag;
+      display: inline-block;
+      @include case(15px);
+      background-size: 15px;
+      margin: 0 8px;
+      cursor: pointer;
+      &.close {
+        background-image: url('../../assets/imgs/closes.png');
+      }
+      &.close:hover {
+        background-image: url('../../assets/imgs/closes-hover.png');
+      }
+      &.minimize {
+        background-image: url('../../assets/imgs/minimize.png');
+      }
+      &.minimize:hover {
+        background-image: url('../../assets/imgs/minimize-hover.png');
+      }
+      &.maximize {
+        background-image: url('../../assets/imgs/maximize.png');
+      }
+      &.maximize:hover {
+        background-image: url('../../assets/imgs/maximize-hover.png');
+      }
+    }
+  }
+  
