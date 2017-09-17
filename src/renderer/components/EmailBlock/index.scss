@@ -1,0 +1,76 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.email-block-frame{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-flow: column;
+    padding: 10px 20px 10px 20px;
+}
+
+.unseen{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(228, 6, 57, 0.25);
+    top: 50%;
+    margin-top: -5px;
+    margin-left: -15px;
+    border: 2px solid #cd4e67
+}
+
+.email-block-first-line{
+    width: 100%;
+    height: 30px;
+    display: flex;
+}
+
+.email-block-sender-name{
+    width: 75%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-size-big;
+    line-height: 30px;
+    text-align: left;
+}
+
+.email-block-attachment-sign{
+    position: relative;
+    width: 15px;
+    height: 15px;
+    top: 50%;
+    margin-top: -7.5px;
+    margin-left: 7px;
+    margin-right: 3px;
+}
+
+.email-block-receive-time{
+    width: 150px;
+    line-height: 30px;
+    font-size: $font-size-small;
+    color: $font-dark;
+    text-align: right;
+}
+
+.email-block-subject{
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    font-size: $font-size-small;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-block-content{
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    font-size: $font-size-small;
+    color: $font-dark;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

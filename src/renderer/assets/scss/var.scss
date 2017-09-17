@@ -9,19 +9,21 @@ $red-lighter: rgba($red, 0.12);
 $white: #fafafa;
 $black: #000;
 $grey: #636363;
-$grey-main: #cccccc;
+$grey-main: #f5f5f5;
 $grey-light: #c5c5c5;
-$grey-lighter: #d1d1d1;
-$grey-deep : #2b323d;
+$grey-lighter: #eae8e7;
+$grey-deep : #c0c0c0;
+$grey-deeper : #2e2a29;
+$grey-hover : #dcdad9;
 /**/
 // ----------------------------------------------------
 // Font Colors
 //-----------------------------------------------------
 $font-light: #999999;
 $font: #636363;
-$font-dark: #5e6a76;
+$font-dark: #a0a0a0;
 $font-darker: #222222;
-$font-gary: #bbbbbb;
+$font-gary: #492E2E;
 $font-red: #d43c33;
 
 /**/
@@ -29,16 +31,18 @@ $font-red: #d43c33;
 // Font size
 //-----------------------------------------------------
 $font-size-big: 18px;
-$font-size-large: 16px;
+$font-size-large: 20px;
 $font-size-head: 13px;
-$font-size-base: 12px;
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-smaller: 12px;
 /**/
 // ----------------------------------------------------
 // bar Width
 //-----------------------------------------------------
 $nav-width: 200px;
 $head-height: 55px;
-$play-bar-height: 65px;
+$email-list-box-width: 350px;
 
 /**/
 // ----------------------------------------------------

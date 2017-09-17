@@ -1,3 +1,5 @@
+@import "src/renderer/assets/scss/var.scss";
+
 /*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
 blockquote,
 body,
@@ -102,4 +104,21 @@ html {
 .wordwrap {
   word-wrap: break-word;
   word-break: break-all;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 2em;
+  background-clip: content-box; 
+  background-color:  rgba(0,0,0,0);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2em;
+  background-color: $grey-deep;
+  opacity: 0.1;
+  height: 5px;
 }

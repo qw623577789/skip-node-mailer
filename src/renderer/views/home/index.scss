@@ -55,3 +55,217 @@
     --image : url('../../assets/imgs/deleted-box.png');
     --image-hover : url('../../assets/imgs/deleted-box-hover.png');
 }
+
+#content {
+    position: absolute;
+    width: 100%;
+    top: $head_height;
+    bottom: 0px;
+    display: flex;
+    background-color: $grey-main;
+}
+
+#left {
+    position: relative;
+    height: 100%;
+    width : $email-list-box-width;
+    background-color: pink;
+    border-right: 1px solid $grey-lighter
+}
+
+.shadow{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 100;
+}
+
+#loading{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    // animation: loading 1.5s infinite linear;  
+}
+
+#search-box {
+    width: 100%;
+    height: 100px;
+    background-color: #f5f5f5
+}
+
+#email-list {
+    position: absolute;
+    width: 100%;
+    top: 100px;
+    bottom: 0px;
+    background-color: $grey-hover;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: center;
+    &:hover {
+        overflow-y: auto;
+    }
+}
+
+.email-block{
+    height: 100px;
+    width: $email-list-box-width;
+    background-color: $grey-lighter;
+    &:hover{
+        background-color: $grey-hover;
+    }
+}
+
+.email-block hr{
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: none;
+    border-top: 1px solid $grey-light;
+}
+
+.test{
+    background-color: $grey-deep;
+}
+
+#right{
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex
+}
+
+#email-content-box{
+    position: absolute;
+    top : 0px;
+    bottom: 100px;
+    width: 100%;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction : column;
+}
+
+#email-header{
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid $grey-lighter
+}
+
+#subject{
+    font-size: $font-size-big;
+    display: block;
+    word-wrap: break-word;
+}
+
+#sender-info{
+    font-size: $font-size-small;
+    display: block; 
+    word-wrap: break-word;
+    padding-top: 5px;
+    color: $font-dark;
+}
+
+#cc{
+    font-size: $font-size-small;
+    display: block;
+    word-wrap: break-word;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: $font-dark;
+}
+
+#email-content{
+    width: 100%;
+    padding-top: 20px;
+    bottom: 100px;
+    overflow-y: auto;
+}
+
+#body{
+    width: 100%;
+}
+
+#attachment{
+    width: 100%;
+    background-color: white;
+    border-radius: 7px;
+    border: 1px solid $grey-deep;
+    padding: 5px 5px;
+}
+
+.attachment-item{
+    height: 30px;
+}
+
+#reply-quickly-box{
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    bottom: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid $grey-lighter;
+    display: flex;
+    flex-flow: column;
+    background-color: white;
+}
+
+#reply-quickly-tool-box{
+    width: 100%;
+    height: 20px;
+}
+
+#full-style{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+    font-size: $font-size-smaller;
+    padding-right: 10px;
+}
+
+#reply-box{
+    flex: 1;
+    display: flex;
+    flex-flow: row;
+}
+
+#reply{
+    flex: 1;
+    border: none;
+    resize: none;
+    font-size: $font-size-base;
+}
+
+#reply-send{
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: -20px;
+    --image: url('../../assets/imgs/reply.png');
+    --image-hover: url('../../assets/imgs/reply-hover.png');
+}
+
+@keyframes loading {  
+    0% {  
+        transform: rotate3d(0deg);
+    }  
+    25% {  
+        transform: rotate(90deg);
+    }  
+    50% {  
+        transform: rotate(180deg);
+    }  
+    100% {  
+        transform: rotate(360deg);
+    }  
+}  

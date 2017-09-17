@@ -7,6 +7,7 @@ import store from './store'
 import {ipcRenderer} from 'electron'
 import {customIpcRenderer} from './utils/ipcSender.js'
 
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
 //暴露公共方法到全局
@@ -26,6 +27,7 @@ ipcRenderer.on('method', function (event, args){    console.log(args)
     console.log(err.message)
   }
 })
+// 
 
 new Vue({
   components: { App },

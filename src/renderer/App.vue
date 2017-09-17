@@ -4,6 +4,7 @@
   </div>
 </template>
 
+
 <script>
   export default {
     name: 'deepin-mail'
@@ -13,3 +14,5 @@
 <style lang="scss">
   @import './assets/scss/common.scss';
 </style>
+
+

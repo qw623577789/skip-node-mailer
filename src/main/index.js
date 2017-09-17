@@ -1,12 +1,8 @@
 import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron';
-
-
-let tray = null;
-if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
-}
+const path = require('path')
 
 app.on('ready', ()=>{
+  initEnv();
   createWindow();
   createTray();
   handleMessage();
@@ -25,6 +21,16 @@ app.on('activate', () => {
   }
 })
 
+function initEnv() {
+  //定义静态资源目录
+  if (process.env.NODE_ENV === 'development') {
+    global.staticResourcePath = require('path').join(__dirname, '/../../static').replace(/\\/g, '\\\\')
+  }
+  else {
+    global.staticResourcePath = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  }
+}
+
 function createWindow () {
   global.mainWindow = new BrowserWindow({
     height: 900,
@@ -34,7 +40,7 @@ function createWindow () {
     useContentSize: true,
     center : true,
     frame : false,
-    icon : __dirname + "/../renderer/assets/imgs/icon.png",
+    icon : `${staticResourcePath}/icon.png`,
     title : "deepin-mail"
   });
 
@@ -45,7 +51,7 @@ function createWindow () {
 }
 
 function createTray(){
-  tray = new Tray(__dirname + "/../renderer/assets/imgs/icon.png");
+  global.tray = new Tray(`${staticResourcePath}/icon.png`);
   let contextMenu = Menu.buildFromTemplate([
     {
       label: '关闭', 
