@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron';
 const path = require('path')
+global.windowManager = [];
 
 app.on('ready', ()=>{
   initEnv();

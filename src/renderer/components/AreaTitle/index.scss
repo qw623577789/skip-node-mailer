@@ -1,0 +1,18 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.wrapper {
+    display: flex;
+}
+
+.title {
+    font-size: $font-size-base;
+    color: $font-dark;
+}
+
+.line {
+    border: none;
+    border-bottom: 1px solid $grey-lighter;
+    height: 15px;
+    margin-left: 5px;
+    flex: 1;
+}

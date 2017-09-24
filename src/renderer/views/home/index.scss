@@ -62,15 +62,12 @@
     top: $head_height;
     bottom: 0px;
     display: flex;
-    background-color: $grey-main;
 }
 
 #left {
     position: relative;
     height: 100%;
     width : $email-list-box-width;
-    background-color: pink;
-    border-right: 1px solid $grey-lighter
 }
 
 .shadow{
@@ -93,17 +90,39 @@
 }
 
 #search-box {
+    position: relative;
     width: 100%;
-    height: 100px;
-    background-color: #f5f5f5
+    height: 70px;
+    background-color: $grey-background;
+    border-bottom: 1px solid $grey-lighter
+}
+
+#search-bar {
+    position: absolute;
+    padding-left: 15px;
+    padding-right: 15px;
+    top : 50%;
+    margin-top: -18px;
+}
+
+#search-type {
+    width: 35px;
+}
+
+#date-box{
+    position: absolute;
+    width: 237px;
+    top : 50%;
+    margin-top: -18px;
+    margin-left: 51px;
 }
 
 #email-list {
     position: absolute;
     width: 100%;
-    top: 100px;
-    bottom: 0px;
-    background-color: $grey-hover;
+    top: 70px;
+    bottom: 50px;
+    background-color: $grey-background;
     overflow-x: hidden;
     overflow-y: hidden;
     text-align: center;
@@ -115,7 +134,7 @@
 .email-block{
     height: 100px;
     width: $email-list-box-width;
-    background-color: $grey-lighter;
+
     &:hover{
         background-color: $grey-hover;
     }
@@ -126,7 +145,49 @@
     margin-left: 20px;
     margin-right: 20px;
     border: none;
-    border-top: 1px solid $grey-light;
+    border-top: 1px solid $grey-lighter;
+}
+
+#system-bar{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    bottom: 0px;
+    background-color: $grey-background;
+    border-top: 1px solid $grey-lighter;
+}
+
+#email-order {
+    width: 30px;
+    height: 30px;
+    margin: auto auto;
+    --image : url('../../assets/imgs/order.png');
+    --image-hover : url('../../assets/imgs/order-hover.png');
+}
+
+#system-config {
+    width: 30px;
+    height: 30px;
+    margin: auto auto;
+    --image : url('../../assets/imgs/system-config.png');
+    --image-hover : url('../../assets/imgs/system-config-hover.png');
+}
+
+#mailbox-manage {
+    width: 30px;
+    height: 30px;
+    margin: auto auto;
+    --image : url('../../assets/imgs/mailbox-manage.png');
+    --image-hover : url('../../assets/imgs/mailbox-manage-hover.png');
+}
+
+#info {
+    width: 30px;
+    height: 30px;
+    margin: auto auto;
+    --image : url('../../assets/imgs/info.png');
+    --image-hover : url('../../assets/imgs/info-hover.png');
 }
 
 .test{
@@ -255,6 +316,15 @@
     --image-hover: url('../../assets/imgs/reply-hover.png');
 }
 
+#system-config-view {
+    // width: 800px;
+}
+
+#system-config-view .el-dialog--small {
+    width: 800px !important
+}
+
+  
 @keyframes loading {  
     0% {  
         transform: rotate3d(0deg);
@@ -269,3 +339,4 @@
         transform: rotate(360deg);
     }  
 }  
+

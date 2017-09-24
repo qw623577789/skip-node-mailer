@@ -1,0 +1,73 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.wrapper {
+    position: relative;
+    display: block;
+    width: 545px;
+    height: 430px;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+#fill-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    width: 2180px;
+}
+
+.form {
+    width: 545px;
+    height: 350px;
+    display: block;
+}
+
+.account-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn {
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+// .account-box .next{
+//     position: relative;
+//     left: 50%;
+//     margin-left: -50px;
+// }
+.info-box {
+    display: block;
+    width: 100%;
+    height: 36px;
+    margin-bottom: 22px;
+    color: $danger
+}
+
+.btn-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.finish-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.finish {
+    width: 128px;
+    height: 128px;
+    // left: 50%;
+    // margin-left: -64px;
+    margin-bottom: 100px;
+    --image: url('../../assets/imgs/finish.png');
+    --image-hover: url('../../assets/imgs/finish.png');
+}

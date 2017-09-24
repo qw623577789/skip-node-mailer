@@ -10,11 +10,10 @@ export default new Router({
       path : '/',
       component : require('@/views/home')
     },
-    // {
-    //   path: '/',
-    //   name: 'landing-page',
-    //   component: require('@/components/LandingPage')
-    // },
+    {
+      path: '/systemConfig',
+      component: require('@/views/systemConfig')
+    }
     // {
     //   path: '*',
     //   redirect: '/home'

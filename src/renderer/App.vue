@@ -11,6 +11,10 @@
   }
 </script>
 
+<style lang="css">
+  @import './assets/theme/index.css';
+</style>
+
 <style lang="scss">
   @import './assets/scss/common.scss';
 </style>
