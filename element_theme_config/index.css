@@ -34,7 +34,7 @@
   --color-extra-light-silver: $grey-deep;
 
   --color-base-gray: $font-dark;
-  --color-light-gray: $font-dark;
+  --color-light-gray: $grey-hover;
   --color-extra-light-gray: $grey-deep;
 
   /* Link

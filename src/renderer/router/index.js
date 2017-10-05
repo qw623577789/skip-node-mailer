@@ -1,22 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import infiniteScroll from 'vue-infinite-scroll'
-Vue.use(infiniteScroll)
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path : '/',
-      component : require('@/views/home')
+      path : '/inbox',
+      component : require('@/views/inbox')
     },
     {
-      path: '/systemConfig',
-      component: require('@/views/systemConfig')
+      path : '/outbox',
+      component : require('@/views/outbox')
+    },
+    {
+      path : '/draftbox',
+      component : require('@/views/draftbox')
+    },
+    {
+      path : '/deletebox',
+      component : require('@/views/deletebox')
+    },
+    {
+      path: '*',
+      redirect: '/inbox'
     }
-    // {
-    //   path: '*',
-    //   redirect: '/home'
-    // }
   ]
 })

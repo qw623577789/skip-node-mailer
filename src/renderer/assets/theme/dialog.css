@@ -1,4 +1,10 @@
-@charset "UTF-8";
+.el-dialog__header:before, .el-dialog__header:after{
+    display: table;
+    content: "";
+}
+.el-dialog__header:after{
+    clear: both;
+}@charset "UTF-8";
 :root{
     /* Transition
   -------------------------- */
@@ -160,15 +166,6 @@
 
 .el-dialog__header{
     padding: 20px 20px 0;
-}
-
-.el-dialog__header:before, .el-dialog__header:after{
-    display: table;
-    content: "";
-}
-
-.el-dialog__header:after{
-    clear: both;
 }
 
 .el-dialog__headerbtn{

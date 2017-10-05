@@ -178,7 +178,7 @@
 }
 .el-tag .el-icon-close:hover{background-color: #fff;color: #c5c5c5;
 }
-.el-tag--gray{background-color: #a0a0a0;border-color: #a0a0a0;color: #a0a0a0;
+.el-tag--gray{background-color: #dce0e3;border-color: #dce0e3;color: #a0a0a0;
 }
 .el-tag--gray .el-tag__close:hover{background-color: #a0a0a0;color: #fff;
 }
@@ -269,7 +269,7 @@
 .el-table-filter__list-item{line-height: 36px;padding: 0 10px;cursor: pointer;font-size: 14px;
 }
 
-.el-table-filter__list-item:hover{background-color: #a0a0a0;color: #a0a0a0;
+.el-table-filter__list-item:hover{background-color: #dce0e3;color: #a0a0a0;
 }
 
 .el-table-filter__list-item.is-active{background-color: #f4ea2a;color: #fff;

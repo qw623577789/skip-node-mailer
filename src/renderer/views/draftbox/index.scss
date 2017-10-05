@@ -1,61 +1,5 @@
 @import "src/renderer/assets/scss/var.scss";
 
-#header {
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-#toolbar{
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top : 0px;
-    height: $head-height;
-    float: left;
-}
-
-
-#in-box {
-    width: 33px;
-    height: 33px;
-    margin-top: 2px;
-    margin-right: 50px;
-    --image: url('../../assets/imgs/in-box.png');
-    --image-hover: url('../../assets/imgs/in-box-hover.png');
-    --badge-color: white;
-    --badge-background-color : red;
-}
-
-#out-box {
-    width: 33px;
-    height: 33px;
-    margin-top: 8px;
-    margin-left: 50px;
-    margin-right: 50px;
-    --image : url('../../assets/imgs/out-box.png');
-    --image-hover : url('../../assets/imgs/out-box-hover.png');
-}
-
-#draft-box {
-    width: 30px;
-    height: 30px;
-
-    margin-left: 50px;
-    margin-right: 50px;
-    --image : url('../../assets/imgs/draft-box.png');
-    --image-hover : url('../../assets/imgs/draft-box-hover.png');
-}
-
-#deleted-box {
-    width: 28px;
-    height: 28px;
-    margin-left: 50px;
-
-    --image : url('../../assets/imgs/deleted-box.png');
-    --image-hover : url('../../assets/imgs/deleted-box-hover.png');
-}
-
 #content {
     position: absolute;
     width: 100%;
@@ -95,26 +39,6 @@
     height: 70px;
     background-color: $grey-background;
     border-bottom: 1px solid $grey-lighter
-}
-
-#search-bar {
-    position: absolute;
-    padding-left: 15px;
-    padding-right: 15px;
-    top : 50%;
-    margin-top: -18px;
-}
-
-#search-type {
-    width: 35px;
-}
-
-#date-box{
-    position: absolute;
-    width: 237px;
-    top : 50%;
-    margin-top: -18px;
-    margin-left: 51px;
 }
 
 #email-list {
@@ -194,7 +118,7 @@
     background-color: $grey-deep;
 }
 
-#right{
+#middle{
     position: relative;
     width: 100%;
     flex: 1;
@@ -204,63 +128,9 @@
 #email-content-box{
     position: absolute;
     top : 0px;
-    bottom: 100px;
+    bottom: 0px;
     width: 100%;
     padding: 20px 20px;
-    display: flex;
-    flex-direction : column;
-}
-
-#email-header{
-    width: 100%;
-    margin-bottom: 10px;
-    border-bottom: 1px solid $grey-lighter
-}
-
-#subject{
-    font-size: $font-size-big;
-    display: block;
-    word-wrap: break-word;
-}
-
-#sender-info{
-    font-size: $font-size-small;
-    display: block; 
-    word-wrap: break-word;
-    padding-top: 5px;
-    color: $font-dark;
-}
-
-#cc{
-    font-size: $font-size-small;
-    display: block;
-    word-wrap: break-word;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: $font-dark;
-}
-
-#email-content{
-    width: 100%;
-    padding-top: 20px;
-    bottom: 100px;
-    overflow-y: auto;
-}
-
-#body{
-    width: 100%;
-}
-
-#attachment{
-    width: 100%;
-    background-color: white;
-    border-radius: 7px;
-    border: 1px solid $grey-deep;
-    padding: 5px 5px;
-}
-
-.attachment-item{
-    height: 30px;
 }
 
 #reply-quickly-box{
@@ -316,15 +186,11 @@
     --image-hover: url('../../assets/imgs/reply-hover.png');
 }
 
-#system-config-view {
-    // width: 800px;
+#right {
+    width: 280px;
+    height: 100%;
 }
 
-#system-config-view .el-dialog--small {
-    width: 800px !important
-}
-
-  
 @keyframes loading {  
     0% {  
         transform: rotate3d(0deg);

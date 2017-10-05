@@ -9,7 +9,20 @@
 }
 
 #sidebar {
-    background-color: white;
+    height: 100%;
+    overflow-y: hidden;
+    &:hover {
+        overflow-y: auto;
+    }
+}
+
+#config-content {
+    padding-left: 20px;
+    height: 100%;
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+        display:none;
+    }
 }
 
 .group {
@@ -25,13 +38,14 @@
     margin-top: 5px;
 }
 
-.item {
+#sidebar li {
     color: $font-dark;
     font-size: $font-size-base;
     height: 40px;
     line-height: 40px;
     font-size: 16px;
-    text-indent: 1em;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
     cursor: pointer;
     &:hover {
         color: $yellow
@@ -80,4 +94,17 @@
 
 #sound-config-box #sound-path {
     flex: 1;
+}
+
+#btn-bar {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#btn-bar .btn {
+    width: 100px;
+    margin-right: 30px;
 }

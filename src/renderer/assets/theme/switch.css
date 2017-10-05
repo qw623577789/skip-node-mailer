@@ -104,8 +104,8 @@
 }
 
 .el-switch.is-disabled .el-switch__core{
-    border-color: #a0a0a0 !important;
-    background: #a0a0a0 !important
+    border-color: #dce0e3 !important;
+    background: #dce0e3 !important
 }
 
 .el-switch.is-disabled .el-switch__core span{

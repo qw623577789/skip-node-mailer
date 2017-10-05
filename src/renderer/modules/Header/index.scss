@@ -1,0 +1,57 @@
+@import "src/renderer/assets/scss/var.scss";
+
+#header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+#toolbar{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top : 0px;
+    height: $head-height;
+    float: left;
+}
+
+
+#in-box {
+    width: 33px;
+    height: 33px;
+    margin-top: 2px;
+    margin-right: 50px;
+    --image: url('../../assets/imgs/in-box.png');
+    --image-hover: url('../../assets/imgs/in-box-hover.png');
+    --badge-color: white;
+    --badge-background-color : red;
+}
+
+#out-box {
+    width: 33px;
+    height: 33px;
+    margin-top: 8px;
+    margin-left: 50px;
+    margin-right: 50px;
+    --image : url('../../assets/imgs/out-box.png');
+    --image-hover : url('../../assets/imgs/out-box-hover.png');
+}
+
+#draft-box {
+    width: 30px;
+    height: 30px;
+
+    margin-left: 50px;
+    margin-right: 50px;
+    --image : url('../../assets/imgs/draft-box.png');
+    --image-hover : url('../../assets/imgs/draft-box-hover.png');
+}
+
+#deleted-box {
+    width: 28px;
+    height: 28px;
+    margin-left: 50px;
+
+    --image : url('../../assets/imgs/deleted-box.png');
+    --image-hover : url('../../assets/imgs/deleted-box-hover.png');
+}

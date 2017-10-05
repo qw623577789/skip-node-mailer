@@ -15,7 +15,7 @@
                                         <el-input></el-input>
                                 </el-form-item>
                                 <div class = "btn-bar">
-                                        <el-button type="success" class = "btn next" @click.native = "nextStep">下一步</el-button>
+                                        <el-button type="success"   :plain="true"  class = "btn next" @click.native = "nextStep">下一步</el-button>
                                 </div>
                         </el-form>
 
@@ -33,7 +33,7 @@
                                         </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="SSL安全协议">
-                                        <el-switch v-model="value2" on-color="#f4ea2a"></el-switch>
+                                        <el-switch on-color="#f4ea2a"></el-switch>
                                 </el-form-item>
                                 <el-form-item label="地址">
                                         <el-input></el-input>
@@ -43,10 +43,10 @@
                                 </el-form-item>
                                 <label class="info-box">邮箱被禁哟</label>
                                 <div class = "btn-bar">
-                                        <el-button type="success" class = "btn">上一步</el-button>
-                                        <el-button type="success" class = "btn">检测</el-button>
-                                        <el-button type="success" class = "btn" @click.native = "nextStep">下一步</el-button>
-                                        <el-button type="success" class = "btn">跳过</el-button>
+                                        <el-button type="warning"  :plain="true" class = "btn">上一步</el-button>
+                                        <el-button type="success"  :plain="true" class = "btn">检测</el-button>
+                                        <el-button type="success"  :plain="true" class = "btn" @click.native = "nextStep">下一步</el-button>
+                                        <el-button type="warning"  :plain="true" class = "btn">跳过</el-button>
                                 </div>
                         </el-form>
 
@@ -58,7 +58,7 @@
                                 element-loading-text="检测中"
                         >
                                 <el-form-item label="SSL安全协议">
-                                        <el-switch v-model="value2" on-color="#f4ea2a"></el-switch>
+                                        <el-switch on-color="#f4ea2a"></el-switch>
                                 </el-form-item>
                                 <el-form-item label="地址">
                                         <el-input></el-input>
@@ -69,10 +69,10 @@
                                 <label class="info-box">邮箱被禁哟</label>
                                 
                                 <div class = "btn-bar">
-                                        <el-button type="success" class = "btn">上一步</el-button>
-                                        <el-button type="success" class = "btn">检测</el-button>
-                                        <el-button type="success" class = "btn" @click.native = "nextStep">保存</el-button>
-                                        <el-button type="success" class = "btn">跳过</el-button>
+                                        <el-button type="warning"  :plain="true" class = "btn">上一步</el-button>
+                                        <el-button type="success"  :plain="true" class = "btn">检测</el-button>
+                                        <el-button type="success"  :plain="true" class = "btn" @click.native = "nextStep">保存</el-button>
+                                        <el-button type="warning"  :plain="true" class = "btn">跳过</el-button>
                                 </div>
 
                         </el-form>
@@ -84,8 +84,8 @@
                         >
                                 <image-btn class = "finish"></image-btn>
                                 <div class = "btn-bar">
-                                        <el-button type="success" class = "btn">管理邮箱</el-button>
-                                        <el-button type="success" class = "btn">关闭</el-button>
+                                        <el-button type="success" :plain="true" class = "btn">管理邮箱</el-button>
+                                        <el-button type="success"  :plain="true"  class = "btn">关闭</el-button>
                                 </div>
 
 

@@ -1,0 +1,48 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.el-tree {
+    border: none
+}
+
+#address-list-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $grey-background
+}
+
+#address-search-box {
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+#address-search {
+    flex: 1
+}
+
+#address-list {
+    height: 100%;
+    background-color: $grey-background
+}
+
+#search {
+    width: 20px;
+    height: 20px;
+    --image : url('../../assets/imgs/search.png');
+    --image-hover : url('../../assets/imgs/search-hover.png');
+}
+
+#add-btn {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    --image : url('../../assets/imgs/add.png');
+    --image-hover : url('../../assets/imgs/add-hover.png');
+}

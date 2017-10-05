@@ -1,0 +1,29 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.search-bar {
+    position: absolute;
+    padding-left: 15px;
+    padding-right: 15px;
+    top : 50%;
+    margin-top: -18px;
+}
+
+.search-type {
+    width: 35px;
+}
+
+.date-box{
+    position: absolute;
+    width: 243px;
+    top : 50%;
+    margin-top: -18px;
+    margin-left: 51px;
+}
+
+#search {
+    width: 20px;
+    height: 20px;
+    --image : url('../../assets/imgs/search.png');
+    --image-hover : url('../../assets/imgs/search-hover.png');
+}
+

@@ -1,0 +1,33 @@
+@import "src/renderer/assets/scss/var.scss";
+
+.select{
+    width: 100%;
+}
+
+#email-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#content {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+#otherConfig {
+    float: right;
+}
+
+#btn-bar {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#btn-bar .btn {
+    width: 100px;
+    margin-right: 30px;
+}

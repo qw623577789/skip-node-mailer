@@ -1,4 +1,10 @@
-@charset "UTF-8";
+.el-button-group:before, .el-button-group:after{
+    display: table;
+    content: "";
+}
+.el-button-group:after{
+    clear: both;
+}@charset "UTF-8";
 :root{
     /* Transition
   -------------------------- */
@@ -453,15 +459,6 @@
 .el-button-group{
     display: inline-block;
     vertical-align: middle;
-}
-
-.el-button-group:before, .el-button-group:after{
-    display: table;
-    content: "";
-}
-
-.el-button-group:after{
-    clear: both;
 }
 
 .el-button-group .el-button--primary{}

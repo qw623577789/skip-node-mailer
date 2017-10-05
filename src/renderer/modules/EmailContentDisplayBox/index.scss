@@ -1,0 +1,58 @@
+@import "src/renderer/assets/scss/var.scss";
+
+#email-content-display-box{
+    display: flex;
+    flex-direction : column;
+}
+
+#email-header{
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid $grey-lighter
+}
+
+#subject{
+    font-size: $font-size-big;
+    display: block;
+    word-wrap: break-word;
+}
+
+#sender-info{
+    font-size: $font-size-small;
+    display: block; 
+    word-wrap: break-word;
+    padding-top: 5px;
+    color: $font-dark;
+}
+
+#cc{
+    font-size: $font-size-small;
+    display: block;
+    word-wrap: break-word;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: $font-dark;
+}
+
+#email-content{
+    width: 100%;
+    padding-top: 20px;
+    bottom: 100px;
+    overflow-y: auto;
+}
+
+#body{
+    width: 100%;
+}
+
+#attachment{
+    width: 100%;
+    background-color: white;
+    border-radius: 7px;
+    border: 1px solid $grey-deep;
+    padding: 5px 5px;
+}
+
+.attachment-item{
+    height: 30px;
+}

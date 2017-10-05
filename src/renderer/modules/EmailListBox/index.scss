@@ -1,0 +1,27 @@
+@import "src/renderer/assets/scss/var.scss";
+
+#email-list {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: center;
+    &:hover {
+        overflow-y: auto;
+    }
+}
+
+.email-block{
+    height: 100px;
+    width: $email-list-box-width;
+
+    &:hover{
+        background-color: $grey-hover;
+    }
+}
+
+.email-block hr{
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: none;
+    border-top: 1px solid $grey-lighter;
+}

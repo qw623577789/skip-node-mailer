@@ -25,10 +25,10 @@
                 </ul>
               </el-col>
               <el-col :span="20">
-                    <el-form  :model="form" label-width="120px" label-position = "left" id = "config-content">
+                    <el-form label-width="120px" label-position = "left" id = "config-content">
                         <area-title class = "area-title" title = "启动"></area-title>
                         <el-form-item label="开机自启">
-                            <el-switch v-model="value2" on-color="#f4ea2a"></el-switch>
+                            <el-switch on-color="#f4ea2a"></el-switch>
                         </el-form-item>
 
                         <area-title class = "area-title" title = "退出"></area-title>
@@ -46,12 +46,12 @@
 
                         <area-title class = "area-title" title = "收信设置"></area-title>
                         <el-form-item label="桌面通知">
-                            <el-switch v-model="value2" on-color="#f4ea2a"></el-switch>
+                            <el-switch on-color="#f4ea2a"></el-switch>
                         </el-form-item>
                         <el-form-item label="声音通知" id = "test">
                             <div id = "sound-config-box">
-                                <el-switch v-model="value2" on-color="#f4ea2a"></el-switch>
-                                <el-input v-model="input" id = "sound-path"></el-input>
+                                <el-switch on-color="#f4ea2a"></el-switch>
+                                <el-input id = "sound-path"></el-input>
                                 <image-btn id = "open-file"></image-btn>
                                 <image-btn id = "play-sound"></image-btn>
                             </div>
@@ -60,11 +60,16 @@
                         
                         <area-title class = "area-title" title = "程序"></area-title>
                         <el-form-item label="显示主程序">
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input placeholder="请输入内容"></el-input>
                         </el-form-item>
                         <el-form-item label="最小化到托盘">
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input placeholder="请输入内容"></el-input>
                         </el-form-item>
+
+                        <div id = "btn-bar">
+                                <el-button  class = "btn" :plain="true" type="warning">恢复默认</el-button>
+                                <el-button  class = "btn":plain="true" type="success">保存</el-button>
+                        </div>
                     </el-form>
 
               </el-col>
