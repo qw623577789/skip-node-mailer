@@ -14,6 +14,7 @@
 
                     <div id = "system-bar">
                             <image-btn id = "email-order"></image-btn>
+                            <image-btn id = "new-email-write" @click.native = "mailboxManageBtnClick"></image-btn>
                             <image-btn id = "mailbox-manage" @click.native = "mailboxManageBtnClick"></image-btn>
                             <image-btn id = "system-config" @click.native = "systemConfigBtnClick"></image-btn>
                             <badge-image-btn id = "info" @click.native = "mailboxAddBtnClick"></badge-image-btn>

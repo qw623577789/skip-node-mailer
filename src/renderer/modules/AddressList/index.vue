@@ -11,12 +11,8 @@
         </div>
 
 
-        <el-tree id = "address-list"
+        <el-tree id = "address-list" empty-text = "暂无联系人"
         class="filter-tree"
-        :data="data2"
-        :props="defaultProps"
-        default-expand-all
-        :filter-node-method="filterNode"
         ref="tree2"
         >
         </el-tree>

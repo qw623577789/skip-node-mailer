@@ -1,6 +1,18 @@
 <template>
     <div id = "header">
+        <el-dropdown @command="handleCommand" id ="email-current" menu-align = "start" trigger = "click">
+            <span class="el-dropdown-link">
+                qw623577789@163.com<i class="el-icon-caret-bottom el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="a">qw623577789@163.com</el-dropdown-item>
+                <el-dropdown-item command="b">qw623577789@163.com</el-dropdown-item>
+                <el-dropdown-item command="c">qw623577789@163.com</el-dropdown-item>
+            </el-dropdown-menu>
+            </el-dropdown>
         <custom-header @window-btn-method="windowBtnClick"></custom-header>
+
+
         <div id="toolbar">
                 <badge-image-btn id = "in-box" :badgeCaption = "unSeenAmount" @click.native = "inboxClick"></badge-image-btn>
                 <image-btn id = "out-box" @click.native = "outboxClick"></image-btn>
@@ -18,7 +30,8 @@
     export  default {
         data() {
             return {
-                unSeenAmount :  "22"
+                unSeenAmount :  "22",
+                emailCurrent : ""
             }
         },
         components : {

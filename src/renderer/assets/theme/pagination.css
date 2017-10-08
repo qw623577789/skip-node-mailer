@@ -632,7 +632,7 @@
     padding: 0 5px;
     height: 24px;
     line-height: 22px;
-    font-size: 12px;
+    font-size: 16px;
     color: #fff;
     border-radius: 4px;
     box-sizing: border-box;
@@ -672,14 +672,14 @@
 .el-tag--primary{
     background-color: rgba(244, 234, 42, 0.1);
     border-color: rgba(244, 234, 42, 0.2);
-    color: #f4ea2a;
+    color: #2e2a29;
 }
 .el-tag--primary .el-tag__close:hover{
-    background-color: #f4ea2a;
+    background-color: #2e2a29;
     color: #fff;
 }
 .el-tag--primary.is-hit{
-    border-color: #f4ea2a;
+    border-color: #2e2a29;
 }
 .el-tag--success{
     background-color: rgba(18,206,102,0.10);

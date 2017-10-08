@@ -20,9 +20,8 @@
                     </div>
                 </div>
 
-                <div id = "middle">
-                    <!-- <email-content-display-box id = "email-content-box"></email-content-display-box> -->
-                    <email-content-edit-box id = "email-content-box"></email-content-edit-box>
+                <div id = "right">
+                    <email-content-display-box id = "email-content-box"></email-content-display-box>
                     <div id = "reply-quickly-box">
                         <div id = "reply-quickly-tool-box">
                             <label id = "full-style">切换到完整模式</label>
@@ -32,10 +31,6 @@
                             <image-btn id = "reply-send">发送</image-btn>
                         </div>
                     </div>
-                </div>
-
-                <div id = "right">
-                    <address-list></address-list>
                 </div>
 
             </div>

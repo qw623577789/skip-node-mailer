@@ -118,7 +118,7 @@
     background-color: $grey-deep;
 }
 
-#middle{
+#right{
     position: relative;
     width: 100%;
     flex: 1;
@@ -184,11 +184,6 @@
     margin-top: -20px;
     --image: url('../../assets/imgs/reply.png');
     --image-hover: url('../../assets/imgs/reply-hover.png');
-}
-
-#right {
-    width: 280px;
-    height: 100%;
 }
 
 @keyframes loading {  

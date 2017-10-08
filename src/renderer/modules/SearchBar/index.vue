@@ -10,7 +10,7 @@
             <image-btn id = "search" slot="append" @click.native = "searchClick"></image-btn>
         </el-input>
         <el-date-picker v-show = "dateBoxVisiable" v-model="searchValue" type="daterange" align="right" placeholder="选择日期范围" :picker-options="pickerOptions" class = "date-box"> </el-date-picker>
-    </div>
+    </div>      
 </template>
 
 <script>

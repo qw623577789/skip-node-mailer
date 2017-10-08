@@ -55,11 +55,29 @@ function createTray(){
   global.tray = new Tray(`${staticResourcePath}/icon.png`);
   let contextMenu = Menu.buildFromTemplate([
     {
-      label: '关闭', 
+      label: '显示主窗口', 
       click: ()=>{
         app.quit();
       }
     },
+    {
+      label: '写新邮件', 
+      click: ()=>{
+        app.quit();
+      }
+    },
+    {
+      label: '系统设置', 
+      click: ()=>{
+        app.quit();
+      }
+    },
+    {
+      label: '退出程序', 
+      click: ()=>{
+        app.quit();
+      }
+    }
   ]);
   tray.setContextMenu(contextMenu);
   tray.on('double-click',function(){

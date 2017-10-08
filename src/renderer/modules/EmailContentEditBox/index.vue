@@ -2,29 +2,27 @@
     <div id = "email-content-display-box">
         <el-form label-width="80px" label-position = "left" id = "email-form">
                 <el-form-item label="发件人">
-                        <el-select v-model="value" placeholder="请选择" class = "select">
-                            <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                                >
-                            </el-option>
+                        <el-select placeholder="请选择" class = "select" v-model="valueTest" >
                         </el-select>
                 </el-form-item>
-                <el-form-item label="收件人">
-                    <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select">
-                        <el-option v-for="item in options5" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-form-item label="收件人" v-model="value10">
+                    <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select" v-model="valueTest">
+                            <el-option
+                            class = "select-option"
+                            v-for="item in options5"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="抄送">
-                    <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select">
-                        <el-option v-for="item in options5" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select" v-model="valueTest">
                     </el-select>
                 </el-form-item>
                 <el-form-item label="密送">
-                        <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select">
-                            <el-option v-for="item in options5" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                        <el-select  multiple filterable allow-create placeholder="请选择文章标签" class = "select" v-model="valueTest">
+
                         </el-select>
                     </el-form-item>                
                 <el-form-item label="主题">
@@ -56,15 +54,16 @@
     export default {
         data() {
             return {
+                valueTest: "",
                 options5: [{
-                    value: 'HTML',
-                    label: 'HTML'
+                    value: 'qw623577789@163.com',
+                    label: 'zxs<qw623577789@163.com>'
                     }, {
-                    value: 'CSS',
-                    label: 'CSS'
+                    value: 'qw623577789@126.com',
+                    label: 'qw623577789@126.com'
                     }, {
-                    value: 'JavaScript',
-                    label: 'JavaScript'
+                    value: '623577789@163.com',
+                    label: '623577789@163.com'
                     }],
                     value10: []
                 }

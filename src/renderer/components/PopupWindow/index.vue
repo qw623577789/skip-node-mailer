@@ -1,6 +1,5 @@
 <template>
         <div class = "wrapper">
-
                 <div class = "content">
                     <div id = "window-bar"><image-btn id = "close" @click.native="close"></image-btn></div>
                     <slot></slot>

@@ -4,6 +4,29 @@
     position: relative;
     display: flex;
     justify-content: center;
+    background-color: $grey-deeper;
+}
+
+#email-current {
+    position: relative;
+    margin-left: 10px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    -webkit-appearance:none;
+    &:hover{
+        cursor: pointer
+    }
+}
+
+.el-dropdown-link {
+    height: $head-height;
+    line-height: $head-height;
+    font-size: $font-size-base;
+}
+
+.el-icon--right {
+    margin-left: 10px;
 }
 
 #toolbar{

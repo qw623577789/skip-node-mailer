@@ -172,7 +172,7 @@
   --------------------------*//* Transfer
   --------------------------*/
 }
-.el-tag{background-color: #c5c5c5;display: inline-block;padding: 0 5px;height: 24px;line-height: 22px;font-size: 12px;color: #fff;border-radius: 4px;box-sizing: border-box;border: 1px solid transparent;white-space: nowrap;
+.el-tag{background-color: #c5c5c5;display: inline-block;padding: 0 5px;height: 24px;line-height: 22px;font-size: 16px;color: #fff;border-radius: 4px;box-sizing: border-box;border: 1px solid transparent;white-space: nowrap;
 }
 .el-tag .el-icon-close{border-radius: 50%;text-align: center;position: relative;cursor: pointer;font-size: 12px;transform: scale(.75, .75);height: 18px;width: 18px;line-height: 18px;vertical-align: middle;top: -1px;right: -2px;
 }
@@ -184,11 +184,11 @@
 }
 .el-tag--gray.is-hit{border-color: #a0a0a0;
 }
-.el-tag--primary{background-color: rgba(244, 234, 42, 0.1);border-color: rgba(244, 234, 42, 0.2);color: #f4ea2a;
+.el-tag--primary{background-color: rgba(244, 234, 42, 0.1);border-color: rgba(244, 234, 42, 0.2);color: #2e2a29;
 }
-.el-tag--primary .el-tag__close:hover{background-color: #f4ea2a;color: #fff;
+.el-tag--primary .el-tag__close:hover{background-color: #2e2a29;color: #fff;
 }
-.el-tag--primary.is-hit{border-color: #f4ea2a;
+.el-tag--primary.is-hit{border-color: #2e2a29;
 }
 .el-tag--success{background-color: rgba(18,206,102,0.10);border-color: rgba(18,206,102,0.20);color: #13ce66;
 }
@@ -269,7 +269,7 @@
 .el-table-filter__list-item{line-height: 36px;padding: 0 10px;cursor: pointer;font-size: 14px;
 }
 
-.el-table-filter__list-item:hover{background-color: #dce0e3;color: #a0a0a0;
+.el-table-filter__list-item:hover{background-color: #eae8e7;color: #000;
 }
 
 .el-table-filter__list-item.is-active{background-color: #f4ea2a;color: #fff;

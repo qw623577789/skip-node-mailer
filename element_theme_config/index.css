@@ -461,7 +461,7 @@
   --tag-fill: var(--border-color-hover);
   --tag-color: var(--color-white);
   --tag-close-color: #666;
-  --tag-font-size: 12px;
+  --tag-font-size: 16px;
   --tag-border-radius: 4px;
 
   --tag-gray-fill: var(--color-light-gray);
@@ -470,7 +470,7 @@
 
   --tag-primary-fill: rgba(var(--color-primary),0.10);
   --tag-primary-border: rgba(var(--color-primary),0.20);
-  --tag-primary-color: var(--color-primary);
+  --tag-primary-color: $grey-deeper;
 
   --tag-success-fill: rgba(18,206,102,0.10);
   --tag-success-border: rgba(18,206,102,0.20);
@@ -487,8 +487,8 @@
   /* Dropdown
   -------------------------- */
   --dropdown-menu-box-shadow: var(--box-shadow-dark);
-  --dropdown-menuItem-hover-fill: var(--color-light-gray);
-  --dropdown-menuItem-hover-color: var(--link-color);
+  --dropdown-menuItem-hover-fill: $grey-lighter;
+  --dropdown-menuItem-hover-color: $black;
 
   /* Badge
   -------------------------- */
