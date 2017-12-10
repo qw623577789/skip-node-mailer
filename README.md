@@ -1,4 +1,4 @@
-# deepin-mail
+# skip-node-mailer
 
 > An electron-vue project
 
