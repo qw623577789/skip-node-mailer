@@ -1,7 +1,7 @@
 {
-  "name": "deepin-mail",
+  "name": "skip-mailer",
   "version": "0.0.1",
-  "author": "skip <skipzheng.vanchu.com>",
+  "author": "skip <623577789@qq.com>",
   "description": "An electron-vue project",
   "license": null,
   "main": "./dist/electron/main.js",
@@ -17,7 +17,7 @@
     "build:theme": "node-et -c element_theme_config/index.css -o src/renderer/assets/theme"
   },
   "build": {
-    "productName": "deepin-mail",
+    "productName": "skip-mail",
     "appId": "org.test.electron-vue",
     "directories": {
       "output": "build"
@@ -54,16 +54,18 @@
     "axios": "^0.16.1",
     "element-ui": "^1.4.4",
     "imap": "^0.8.19",
+    "log4js": "^2.3.12",
     "mailparser": "^2.0.5",
     "node-poplib-gowhich": "^1.0.2",
     "nodemailer": "^4.0.1",
+    "reflect-metadata": "^0.1.10",
+    "smart-model-for-sqlcipher": "^1.0.1",
+    "sqlcipher": "^1.1.1",
     "vue": "^2.3.3",
     "vue-devtools": "^3.1.9",
     "vue-electron": "^1.0.6",
     "vue-infinite-scroll": "^2.0.1",
     "vue-router": "^2.5.3",
-    "vue-scroll-top": "^0.1.7",
-    "vue-virtual-scroll-list": "^1.1.5",
     "vueditor": "^0.2.8",
     "vuex": "^2.3.1"
   },

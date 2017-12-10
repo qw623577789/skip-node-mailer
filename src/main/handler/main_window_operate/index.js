@@ -1,6 +1,4 @@
-import {app} from 'electron'
-
-export default async (request)=>{
+export default async (request) => {
     switch(request) {
         case "minimize":
             if (!mainWindow.isMinimized()) {
@@ -13,12 +11,15 @@ export default async (request)=>{
             } else {
                 mainWindow.maximize();
             }
-            IpcSender.send("test", {
+
+            GB.Logger.Runtime.info("ssssssss")
+            //await GB.Model.insert('user').data({name:'ray', id: '1003'}).run()
+            GB.IpcSender.send("test", {
                 "sss" : "sssssss"
             })
             break;
         case "close":
-            app.quit();
+            GB.Electron.app.quit();
             break;
         default :
             throw new Error(`can not deal the request ${request}`);

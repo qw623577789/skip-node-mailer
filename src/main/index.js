@@ -1,4 +1,6 @@
-import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron';
+import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from GB.Electron;
+import "reflect-metadata";
+global.GB = require('./reference').default;
 const path = require('path')
 global.windowManager = [];
 
@@ -7,7 +9,6 @@ app.on('ready', ()=>{
   createWindow();
   createTray();
   handleMessage();
-  createIpcSender();
 })
 
 app.on('window-all-closed', () => {
@@ -103,12 +104,4 @@ function handleMessage(){
       console.log(err.stack)
     }
   })
-}
-
-function createIpcSender(){
-  global.IpcSender = class {
-    static send(method, data){
-      mainWindow.webContents.send('method', JSON.stringify({method, data}));
-    }
-  }
 }
