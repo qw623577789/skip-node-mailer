@@ -1,5 +1,5 @@
 {
-  "name": "skip-mailer",
+  "name": "skip-node-mailer",
   "version": "0.0.1",
   "author": "skip <623577789@qq.com>",
   "description": "An electron-vue project",
@@ -17,7 +17,7 @@
     "build:theme": "node-et -c element_theme_config/index.css -o src/renderer/assets/theme"
   },
   "build": {
-    "productName": "skip-mail",
+    "productName": "mailer",
     "appId": "org.test.electron-vue",
     "directories": {
       "output": "build"
