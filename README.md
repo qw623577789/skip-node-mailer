@@ -1,4 +1,4 @@
-# skip-node-mailer
+# skip-node-mailer 还未编写完成
 
 > An electron-vue project
 
