@@ -1,8 +1,7 @@
-export default async (request) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(()=>{
-            console.log("start")
-            return resolve(request);
-        }, 3000);
-    })
+export default async ({request: username, constant}) => {
+    let result = await GB.Model.delete("mailbox").where(GB.Model.Logic.statement("username", "=", username));
+    if (result == 0) {
+        throw new Error(`${username} is not exist`);
+    }
+    return constant.ResponseState.SUCCESS;
 }

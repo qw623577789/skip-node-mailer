@@ -1,11 +1,10 @@
-import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from GB.Electron;
+require("./env");
+import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron'
 import "reflect-metadata";
-global.GB = require('./reference').default;
-const path = require('path')
+
 global.windowManager = [];
 
 app.on('ready', ()=>{
-  initEnv();
   createWindow();
   createTray();
   handleMessage();
@@ -23,15 +22,6 @@ app.on('activate', () => {
   }
 })
 
-function initEnv() {
-  //定义静态资源目录
-  if (process.env.NODE_ENV === 'development') {
-    global.staticResourcePath = require('path').join(__dirname, '/../../static').replace(/\\/g, '\\\\')
-  }
-  else {
-    global.staticResourcePath = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
-  }
-}
 
 function createWindow () {
   global.mainWindow = new BrowserWindow({
@@ -88,20 +78,7 @@ function createTray(){
 
 function handleMessage(){
   ipcMain.on('method', async (event, args)=>{
-    let queryData = JSON.parse(args);
-    try {
-      let handler = require(`${__dirname}/handler/${queryData.method}`);
-
-      if(queryData.mode == "async") {      //异步返回值模式
-        handler.default(queryData.data);
-        event.returnValue = "";
-      }
-      else {      //同步返回值模式
-        event.returnValue = await handler.default(queryData.data);
-      }
-    }
-    catch(err){
-      console.log(err.stack)
-    }
+    let handler = await require(`${__dirname}/handler`);
+    event.returnValue = JSON.stringify(await handler.default(args));
   })
 }

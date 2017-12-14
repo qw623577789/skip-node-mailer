@@ -1,4 +1,5 @@
-export default async (request) => {
+module.exports = async (request) => {
+    console.log(request);
     switch(request) {
         case "minimize":
             if (!mainWindow.isMinimized()) {
