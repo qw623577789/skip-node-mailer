@@ -1,10 +1,13 @@
 require("./env");
+const path = require("path")
 import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron'
 import "reflect-metadata";
 
+
 global.windowManager = [];
 
-app.on('ready', ()=>{
+app.on('ready', async ()=>{
+  await initData();
   createWindow();
   createTray();
   handleMessage();
@@ -22,6 +25,12 @@ app.on('activate', () => {
   }
 })
 
+async function initData() {
+  const fs = require("fs");
+  if (!fs.existsSync(`${GB.Path.Data}/data`)) {
+    await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);
+  }
+}
 
 function createWindow () {
   global.mainWindow = new BrowserWindow({
@@ -32,7 +41,7 @@ function createWindow () {
     useContentSize: true,
     center : true,
     frame : false,
-    icon : `${staticResourcePath}/icon.png`,
+    icon : `${GB.Path.Resource}/icon.png`,
     title : "deepin-mail"
   });
 
@@ -43,7 +52,7 @@ function createWindow () {
 }
 
 function createTray(){
-  global.tray = new Tray(`${staticResourcePath}/icon.png`);
+  global.tray = new Tray(`${GB.Path.Resource}/icon.png`);
   let contextMenu = Menu.buildFromTemplate([
     {
       label: '显示主窗口', 

@@ -1,10 +1,11 @@
 export default async (args) => {
-  console.log(args);
-    let queryData = JSON.parse(args);
+
+    let queryData = JSON.parse(args);  console.log(queryData);
     try {
       //const schema = GB.Module.SchemaValidater.resolveSchema(`${__dirname}/${queryData.method}/schema`);
       //GB.Module.SchemaValidater.validateSchema("request", queryData.data, schema);
       const handler = require(`${__dirname}/${queryData.method}`);
+      console.log(`${__dirname}/${queryData.method}`);
       await handler(queryData.data);
       /*
       if(queryData.mode == "async") {      
@@ -25,6 +26,7 @@ export default async (args) => {
       }*/
     }
     catch(error) {
+        console.log(error)
         GB.Logger.Runtime.error(error);
         return {status: -1}
     }

@@ -1,3 +1,3 @@
 import _reference = require('./reference');
-export = _reference.default;
+export = _reference;
 export as namespace GB;

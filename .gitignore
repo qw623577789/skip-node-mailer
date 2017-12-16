@@ -11,3 +11,5 @@ thumbs.db
 !.gitkeep
 .vscode
 /build/
+src/main/logs
+*.log

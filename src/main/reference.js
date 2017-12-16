@@ -1,11 +1,10 @@
 const Log4js = require('log4js');
 const path = require('path')
-
 Log4js.configure({
     appenders: {
         runtime: {
             type: 'dateFile',
-            filename: `${require('electron').app.getPath("userData")}/logs/runtime/`,
+            filename: `./logs/runtime/`,
             pattern: "yyyy-MM-dd.log",
             alwaysIncludePattern: true
         }
@@ -16,20 +15,19 @@ Log4js.configure({
     }
 });
 
-export default {
+module.exports =  {
         // Config: require('../config'), 
-        Model: require("smart-model-for-sqlcipher").setup(`${__dirname}/model/definition`, `${__dirname}/model/config`),
+        Model: require("smart-model-for-sqlcipher").setup(`${__dirname}/model/definition`,  `${__dirname}/model/config`),
         Electron: require('electron'),
         Path: class {
             static get Project() {
-
+                return __dirname 
             }
             static get Data() {
                 return require('electron').app.getPath("userData")
             }
             static get Resource() {
-                return process.env.NODE_ENV === 'development' ?  require('path').join(__dirname, '/../../static').replace(/\\/g, '\\\\') :
-                    require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+                return process.env.NODE_ENV === 'development' ?  `${__dirname}/../../static` : `${__dirname}/static`
             }
         },
         IpcSender: class {
