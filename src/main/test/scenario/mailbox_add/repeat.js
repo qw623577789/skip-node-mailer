@@ -1,8 +1,10 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "添加邮箱，应该成功",
-    prerequisites: [],
+    name: "重复添加邮箱,应该阻止",
+    prerequisites: [
+        require('./success')
+    ],
     steps: [
         {
             name: "mailbox_add",
@@ -23,7 +25,7 @@ module.exports = {
                 };
             },
             handleResponse: function({error, response}, dataset) {
-                assert(response !== undefined && response == 0, "add failed");
+                assert(response !== undefined && response == 1,  "failed");
             }
         }
     ]

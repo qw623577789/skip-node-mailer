@@ -21,7 +21,7 @@ GB.Electron.app.on('activate', () => {
 
 GB.Electron.ipcMain.on('method', async (event, args)=>{
   let handler = await require(`${__dirname}/handler`);
-  event.returnValue = JSON.stringify(await handler.default(args));
+  event.returnValue = JSON.stringify(await handler(args));
 })
 
 async function initData() {

@@ -1,5 +1,5 @@
 export default async ({request: username, constant}) => {
-    let result = await GB.Model.delete("mailbox").where(GB.Model.Logic.statement("username", "=", username));
+    let result = await GB.Model.delete("mailbox").where(GB.Model.Logic.statement("username", "=", username)).run();
     if (result == 0) {
         throw new Error(`${username} is not exist`);
     }

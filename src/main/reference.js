@@ -1,17 +1,19 @@
 const Log4js = require('log4js');
-const path = require('path')
+const path = require('path');
+
 Log4js.configure({
     appenders: {
+        out: { type: 'stdout' },
         runtime: {
             type: 'dateFile',
-            filename: `${require('electron').app.getPath("userData")}/logs/runtime/`,
+            filename: process.env.NODE_ENV == "test" ? process.cwd() + '/logs/runtime/' : `${require('electron').app.getPath("userData")}`,
             pattern: "yyyy-MM-dd.log",
             alwaysIncludePattern: true
         }
     },
     categories: {
         default: { appenders: ['runtime'], level: "ALL" },
-        runtime: { appenders: ['runtime'], level: "ALL" }
+        runtime: { appenders: ['runtime', 'out'], level: "ALL" }
     }
 });
 
@@ -26,10 +28,24 @@ module.exports =  {
                 return __dirname 
             }
             static get Data() {
-                return require('electron').app.getPath("userData")
+                switch (process.env.NODE_ENV) {
+                    case 'development':
+                        return require('electron').app.getPath("userData")
+                    case 'test':
+                        return process.cwd()
+                    default:
+                        return require('electron').app.getPath("userData")
+                }
             }
             static get Resource() {
-                return process.env.NODE_ENV === 'development' ?  `${__dirname}/../../static` : `${__dirname}/static`
+                switch (process.env.NODE_ENV) {
+                    case 'development':
+                        return `${__dirname}/../../static`;
+                    case 'test':
+                        return process.cwd()
+                    default:
+                        return `${__dirname}/static`
+                }
             }
         },
         Logger: {
