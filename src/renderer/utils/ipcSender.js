@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-export class customIpcRenderer {
+export class IpcSender {
     static send(method, data) {
         ipcRenderer.send("method", JSON.stringify({
             mode : "async", method, data

@@ -54,6 +54,11 @@ if (process.env.NODE_ENV === 'production') {
         from: path.join(__dirname, '../src/main/model'),
         to: path.join(__dirname, '../dist/electron/model'),
         ignore: ['.*']
+      },
+      {
+        from: path.join(__dirname, '../src/share'),
+        to: path.join(__dirname, '../dist/electron/share'),
+        ignore: ['.*']
       }
     ]),
     new webpack.DefinePlugin({

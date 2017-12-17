@@ -43,13 +43,13 @@
             windowBtnClick: function(method) {
                 switch(method){
                     case 'minimize':
-                    this.ipcSender.send('window_operate', 'minimize');
+                    this.ipcSender.send(this.ipcMethod.WINDOW_OPERATE, 'minimize');
                     break;
                     case 'maximize':
-                    this.ipcSender.send('window_operate', 'maximize');
+                    this.ipcSender.send(this.ipcMethod.WINDOW_OPERATE, 'maximize');
                     break;
                     case 'close':
-                    this.ipcSender.send('window_operate', 'close');
+                    this.ipcSender.send(this.ipcMethod.WINDOW_OPERATE, 'close');
                     break;           
                 }
             },

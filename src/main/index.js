@@ -5,12 +5,11 @@ GB.Electron.app.on('ready', async ()=>{
   await initData();
   createWindow();
   createTray();
-  handleMessage();
 })
 
 GB.Electron.app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    GB.Electron.app.quit()
   }
 })
 
@@ -18,6 +17,11 @@ GB.Electron.app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+})
+
+GB.Electron.ipcMain.on('method', async (event, args)=>{
+  let handler = await require(`${__dirname}/handler`);
+  event.returnValue = JSON.stringify(await handler.default(args));
 })
 
 async function initData() {
@@ -44,6 +48,7 @@ function createWindow () {
   let winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
   GB.Window.loadURL(winURL)
   GB.Window.on('closed', () => {})
+  console.log(GB.Common.Constant.IpcMethod.WINDOW_OPERATE)
 }
 
 function createTray(){
@@ -77,12 +82,5 @@ function createTray(){
   GB.Tray.setContextMenu(contextMenu);
   GB.Tray.on('double-click',function(){
     GB.Window.show();
-  })
-}
-
-function handleMessage(){
-  GB.Electron.ipcMain.on('method', async (event, args)=>{
-    let handler = await require(`${__dirname}/handler`);
-    event.returnValue = JSON.stringify(await handler.default(args));
   })
 }

@@ -5,5 +5,6 @@ module.exports = {
     },
     PostProtocol: {
         STMP: 1
-    }
+    },
+    IpcMethod: require("../../../share/ipc_method.json")
 }
