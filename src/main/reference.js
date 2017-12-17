@@ -4,7 +4,7 @@ Log4js.configure({
     appenders: {
         runtime: {
             type: 'dateFile',
-            filename: `./logs/runtime/`,
+            filename: `${require('electron').app.getPath("userData")}/logs/runtime/`,
             pattern: "yyyy-MM-dd.log",
             alwaysIncludePattern: true
         }
@@ -18,6 +18,8 @@ Log4js.configure({
 module.exports =  {
         // Config: require('../config'), 
         Model: require("smart-model-for-sqlcipher").setup(`${__dirname}/model/definition`,  `${__dirname}/model/config`),
+        Window: global.Window,
+        Tray: global.Tray,
         Electron: require('electron'),
         Path: class {
             static get Project() {
@@ -28,11 +30,6 @@ module.exports =  {
             }
             static get Resource() {
                 return process.env.NODE_ENV === 'development' ?  `${__dirname}/../../static` : `${__dirname}/static`
-            }
-        },
-        IpcSender: class {
-            static send(method, data){
-              mainWindow.webContents.send('method', JSON.stringify({method, data}));
             }
         },
         Logger: {
@@ -47,6 +44,7 @@ module.exports =  {
             static get Pop3() {return require('./module/pop3')}
             static get Smtp() {return require('./module/smtp')}
             static get SchemaValidater() {return require('./module/schema_validater')}
+            static get IpcSender() {return require('./module/ipc_sender')}
         }
 }
 

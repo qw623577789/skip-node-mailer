@@ -1,25 +1,20 @@
 require("./env");
-const path = require("path")
-import { app, BrowserWindow, Menu,Tray, MenuItem, ipcMain } from 'electron'
 import "reflect-metadata";
 
-
-global.windowManager = [];
-
-app.on('ready', async ()=>{
+GB.Electron.app.on('ready', async ()=>{
   await initData();
   createWindow();
   createTray();
   handleMessage();
 })
 
-app.on('window-all-closed', () => {
+GB.Electron.app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-app.on('activate', () => {
+GB.Electron.app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
@@ -33,7 +28,7 @@ async function initData() {
 }
 
 function createWindow () {
-  global.mainWindow = new BrowserWindow({
+  GB.Window = new GB.Electron.BrowserWindow({
     height: 900,
     width: 1200,
     minHeight: 900,
@@ -45,48 +40,48 @@ function createWindow () {
     title : "deepin-mail"
   });
 
-  Menu.setApplicationMenu(null);
+  GB.Electron.Menu.setApplicationMenu(null);
   let winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
-  mainWindow.loadURL(winURL)
-  mainWindow.on('closed', () => {})
+  GB.Window.loadURL(winURL)
+  GB.Window.on('closed', () => {})
 }
 
 function createTray(){
-  global.tray = new Tray(`${GB.Path.Resource}/icon.png`);
-  let contextMenu = Menu.buildFromTemplate([
+  GB.Tray = new GB.Electron.Tray(`${GB.Path.Resource}/icon.png`);
+  let contextMenu = GB.Electron.Menu.buildFromTemplate([
     {
       label: '显示主窗口', 
       click: ()=>{
-        app.quit();
+        GB.Electron.app.quit();
       }
     },
     {
       label: '写新邮件', 
       click: ()=>{
-        app.quit();
+        GB.Electron.app.quit();
       }
     },
     {
       label: '系统设置', 
       click: ()=>{
-        app.quit();
+        GB.Electron.app.quit();
       }
     },
     {
       label: '退出程序', 
       click: ()=>{
-        app.quit();
+        GB.Electron.app.quit();
       }
     }
   ]);
-  tray.setContextMenu(contextMenu);
-  tray.on('double-click',function(){
-        mainWindow.show();
+  GB.Tray.setContextMenu(contextMenu);
+  GB.Tray.on('double-click',function(){
+    GB.Window.show();
   })
 }
 
 function handleMessage(){
-  ipcMain.on('method', async (event, args)=>{
+  GB.Electron.ipcMain.on('method', async (event, args)=>{
     let handler = await require(`${__dirname}/handler`);
     event.returnValue = JSON.stringify(await handler.default(args));
   })
