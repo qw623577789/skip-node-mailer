@@ -1,10 +1,3 @@
-const constant = {
-    ResponseState: {
-        SUCCESS: 0,
-        NOT_EXIST: 1
-    }
-}
-
 const request = {
     type: "object",
     properties: {
@@ -60,9 +53,6 @@ const request = {
     ]
 }
 
-const response = {
-    type: "integer",
-    enum: Object.values(constant.ResponseState)
-}
+const response = {}
 
-module.exports = {constant, request, response}
+module.exports = {request, response}
