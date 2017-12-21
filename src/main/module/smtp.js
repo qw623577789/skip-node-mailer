@@ -26,7 +26,7 @@ module.exports = class {
         return new Promise((resolve, reject)=>{
             this._stmp.verify(function(err, success) {
                 if (err) {
-                    return reject({
+                    return resolve({
                         state : 1,
                         message : err.message
                     });

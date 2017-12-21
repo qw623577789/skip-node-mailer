@@ -1,4 +1,8 @@
 module.exports = {
+    Method: {
+        POST: 1,
+        RECEIVE: 2
+    },
     ReceiveProtocol: {
         POP3: 1,
         IMAP: 2
