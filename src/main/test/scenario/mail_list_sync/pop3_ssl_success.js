@@ -1,26 +1,26 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "pop3_ssl错误密码登录邮箱，应该登录失败",
+    name: "pop3_ssl同步邮件列表，应该成功",
     prerequisites: [
     ],
     steps: [
         {
-            name: "mailbox_verify",
+            name: "mail_list_sync",
             timeout: 10000,
             prepareRequest: function(dataset) {
                 return {
-                    method: GB.Common.Constant.Method.RECEIVE,
+                    box: GB.Common.Constant.Mail.Classify.INBOX,
                     protocol: GB.Common.Constant.ReceiveProtocol.POP3,
                     username: "mail_tester@126.com",
-                    password: "qwe123po1i",
+                    password: "qwe123poi",
                     address: "pop.126.com",
                     port: 995,
                     useSSL: 1
                 }
             },
             handleResponse: function({error, response}, dataset) {
-                assert(error == undefined && response.state == 1, "failed");
+                assert(error == undefined, "sync failed");
             }
         }
     ]

@@ -1,26 +1,26 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "imap错误密码登录邮箱，应该登录失败",
+    name: "imap_ssl同步邮件列表，应该成功",
     prerequisites: [
     ],
     steps: [
         {
-            name: "mailbox_verify",
-            timeout: 10000,
+            name: "mail_list_sync",
+            timeout: 100000,
             prepareRequest: function(dataset) {
                 return {
-                    method: GB.Common.Constant.Method.RECEIVE,
+                    box: GB.Common.Constant.Mail.Classify.INBOX,
                     protocol: GB.Common.Constant.ReceiveProtocol.IMAP,
                     username: "mail_tester@126.com",
-                    password: "qwe123po1i",
+                    password: "qwe123poi",
                     address: "imap.126.com",
-                    port: 143,
-                    useSSL: 0
+                    port: 993,
+                    useSSL: 1
                 }
             },
             handleResponse: function({error, response}, dataset) {
-                assert(error == undefined && response.state == 1, "failed");
+                assert(error == undefined && response.state == 0, "login failed");
             }
         }
     ]

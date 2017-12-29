@@ -1,27 +1,18 @@
-const constant = {
-    State: {
-        SUCCESS: 0,
-        FAILED: 1
-    }
-}
-
 const request = {
     type: "object",
     switch: [
         {
             if: {
-                properties: {
-                    method: {
-                        type: "integer",
-                        enum: [GB.Common.Constant.Method.POST]
-                    }
+                protocol: {
+                    type: "integer",
+                    enum: [GB.Common.Constant.ReceiveProtocol.IMAP]
                 }
             },
             then: {
                 properties: {
-                    method: {
-                        type: "integer",
-                        enum: [GB.Common.Constant.Method.POST]
+                    box: {
+                        type: "string",
+                        enum: Object.values(GB.Common.Constant.Mail.Classify)
                     },
                     username: {
                         type: "string",
@@ -33,7 +24,7 @@ const request = {
                     },
                     protocol: {
                         type: "integer",
-                        enum: Object.values(GB.Common.Constant.PostProtocol)
+                        enum: [GB.Common.Constant.ReceiveProtocol.IMAP]
                     },
                     useSSL: {
                         type: "integer",
@@ -49,23 +40,21 @@ const request = {
                     }
                 },
                 additionalProperties: false,
-                required: ["method", "username", "password", "protocol", "useSSL", "address", "port"],
+                required: ["box", "username", "password", "protocol", "useSSL", "address", "port"]
             }
         },
         {
             if: {
-                properties: {
-                    method: {
-                        type: "integer",
-                        enum: [GB.Common.Constant.Method.RECEIVE]
-                    }
+                protocol: {
+                    type: "integer",
+                    enum: [GB.Common.Constant.ReceiveProtocol.POP3]
                 }
             },
             then: {
                 properties: {
-                    method: {
-                        type: "integer",
-                        enum: [GB.Common.Constant.Method.RECEIVE]
+                    box: {
+                        type: "string",
+                        enum: [GB.Common.Constant.Mail.Classify.INBOX]
                     },
                     username: {
                         type: "string",
@@ -77,7 +66,7 @@ const request = {
                     },
                     protocol: {
                         type: "integer",
-                        enum: Object.values(GB.Common.Constant.ReceiveProtocol)
+                        enum: [GB.Common.Constant.ReceiveProtocol.POP3]
                     },
                     useSSL: {
                         type: "integer",
@@ -93,27 +82,14 @@ const request = {
                     }
                 },
                 additionalProperties: false,
-                required: ["method", "username", "password", "protocol", "useSSL", "address", "port"],
+                required: ["box", "username", "password", "protocol", "useSSL", "address", "port"]
             }
         }
     ]
+
 }
 
 const response = {
-    type: "object",
-    properties: {
-        state: {
-            type: "integer",
-            enum: [0, 1]
-        },
-        message: {
-            type: "string",
-            pattern: "[\s\S]*"
-        }
-    },
-    additionalProperties: false,
-    required: ["state"]
-
 }
 
-module.exports = {constant, request, response}
+module.exports = {request, response}

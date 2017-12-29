@@ -12,9 +12,9 @@ module.exports = {
                 return {
                     method: GB.Common.Constant.Method.RECEIVE,
                     protocol: GB.Common.Constant.ReceiveProtocol.POP3,
-                    username: "mail_tester@163.com",
+                    username: "mail_tester@126.com",
                     password: "qwe123po1i",
-                    address: "pop.163.com",
+                    address: "pop.126.com",
                     port: 110,
                     useSSL: 0
                 }

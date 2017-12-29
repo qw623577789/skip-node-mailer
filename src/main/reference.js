@@ -19,6 +19,7 @@ Log4js.configure({
 
 module.exports =  {
         // Config: require('../config'), 
+        IsElectron: process.env.NODE_ENV != "test",
         Model: require("smart-model-for-sqlcipher").setup(`${__dirname}/model/definition`,  `${__dirname}/model/config`),
         Window: global.Window,
         Tray: global.Tray,

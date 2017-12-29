@@ -12,9 +12,9 @@ module.exports = {
                 return {
                     method: GB.Common.Constant.Method.POST,
                     protocol: GB.Common.Constant.ReceiveProtocol.IMAP,
-                    username: "mail_tester@163.com",
+                    username: "mail_tester@126.com",
                     password: "qwe123poi",
-                    address: "smtp.163.com",
+                    address: "smtp.126.com",
                     port: 994,
                     useSSL: 1
                 }

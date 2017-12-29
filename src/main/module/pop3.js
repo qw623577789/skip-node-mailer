@@ -1,42 +1,54 @@
 const Pop = require('node-poplib-gowhich').Client;
 
-module.exports = class {
-    constructor({
+module.exports = class Pop3{
+    constructor(pop){
+        this._pop = pop;
+    }
+
+    static async getinstance({
         user,
         password,
         host,
         port,
         secure = true, //使用安全传输协议
         debug = false
-    }){
-        this._user = user;
-        this._password = password;
-        this._host = host;
-        this._port = port;
-        this._secure = secure;
-        this._debug = debug;
+    }) {
+        let pop = new Pop({
+            hostname: host,
+            port:  port,
+            tls: secure,
+            mailparser: true,
+            username: user,
+            password: password,
+            debug : debug
+          });
+
+          await this._connect(pop);
+          return new Pop3(pop);
     }
 
-    async  list() {
-        let pop = await this._connect();
+    close() {
+        this._pop.quit();
+    }
+
+    async  index() {
+        let that = this;
         return await new Promise((resolve, reject) => {
-            pop.uidl(function(err, data) {
+            that._pop.uidl(function(err, data) {
                 if(err != null) return reject(err);
                 return resolve(data);
             });
         }).then(function (data) {
-            pop.quit();
             return data;
         }).catch((err)=>{
-            pop.quit();
             throw new Error(err);
         });
     }
 
     async  getDetail(uid) {
-        let pop = await this._connect();
+        let that = this;
         return await new Promise((resolve, reject) => {
-            pop.retr(uid,function(err, data) {
+            that._pop.retr(uid,function(err, data) {
                 if (err !== null) {
                     return reject(err);
                 } else {
@@ -44,59 +56,42 @@ module.exports = class {
                 }
             });
         }).then((data)=>{
-            pop.quit();
             return data;
         })
     }
 
-    async  get(uidList, callback) {
-        let pop = await this._connect();
-        let outgoing  = [];
+    async  list(uidList, callback) {
+        let that = this;
+        let outgoing  = [];        
         for(let uid of uidList) {
             await new Promise((resolve, reject) => {
-                pop.top(uid, 0,function(err, data) {
+                that._pop.top(uid, 0,function(err, data) {
+                    //console.log(data)
                     if (err !== null) {
                         outgoing.push({
                             uid,
                             state : false
                         });
-                        callback(err, uid);
+                        if (callback != undefined) callback(err, uid);
                     } else {
                         outgoing.push({
                             uid,
                             state : true,
                             data : data
                         });
-                        callback(null, uid);
+                        if (callback != undefined) callback(null, uid);
                     }
                     return resolve();
                 });
             })
         }
-        pop.quit();
         return outgoing;
     }
 
-    async verify(){
-        try {
-            let pop = await this._connect();
-            pop.quit();
-            return {
-                state : 0
-            }
-        }
-        catch (err){
-            return {
-                state : 1,
-                message : err.message
-            }
-        }
-    }
-
     async  delete(uid) {
-        let pop = await this._connect();
+        let that = this;
         return await new Promise((resolve, reject) => {
-            pop.dele(uid,function(err, data) {
+            that._pop.dele(uid,function(err, data) {
                 if (err !== null) {
                     return reject(err);
                 } else {
@@ -104,23 +99,11 @@ module.exports = class {
                 }
             });
         }).then((data)=>{
-            pop.quit();
             return data;
         })
     }
 
-    async _connect(){
-        let that = this;
-        let pop = new Pop({
-            hostname: this._host,
-            port:  this._port,
-            tls: this._secure,
-            mailparser: true,
-            username: this._user,
-            password: this._password,
-            debug : this._debug
-          });
-
+    static async  _connect(pop){
         return new Promise((resolve, reject) => {
             pop.connect(function(err) {
                 if(err != null) {
@@ -132,7 +115,5 @@ module.exports = class {
               })
         })
     }
-
-
 }
 

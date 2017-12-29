@@ -1,7 +1,11 @@
 const nodeMailer = require('nodemailer');
 
-module.exports = class {
-    constructor({
+module.exports = class Smtp{
+    constructor(smtp) {
+        this._smtp = smtp;
+    }
+
+    static async getinstance({
         user,
         password,
         host,
@@ -9,7 +13,7 @@ module.exports = class {
         secure = true, //使用安全传输协议
         debug = false
     }) {
-        this._stmp = nodeMailer.createTransport({
+        let smtp = nodeMailer.createTransport({
             host,
             port,
             secure,
@@ -20,20 +24,17 @@ module.exports = class {
             debug,
             logger : debug
         });
+
+        return new Smtp(smtp);
     }
 
     async verify(){
         return new Promise((resolve, reject)=>{
-            this._stmp.verify(function(err, success) {
+            this._smtp.verify(function(err, success) {
                 if (err) {
-                    return resolve({
-                        state : 1,
-                        message : err.message
-                    });
+                    return reject(err);
                 } else {
-                    return resolve({
-                        state : 0
-                    });
+                    return resolve();
                 }
             });
         })
@@ -82,7 +83,7 @@ module.exports = class {
         };
 
         return new Promise((resolve, reject)=>{
-            this._stmp.sendMail(message, (err, data)=>{
+            this._smtp.sendMail(message, (err, data)=>{
                 if(err != undefined) {
                     return reject(err);
                 }

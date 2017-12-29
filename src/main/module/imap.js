@@ -1,17 +1,21 @@
-const Imap = require('imap')
+const BaseImap = require('imap')
 const MailParser = require("mailparser").MailParser
 const fs = require("fs")
 
-module.exports = class {
-    constructor({
+module.exports = class Imap{
+    constructor(imap){
+        this._imap = imap;
+    }
+    
+    static async getinstance({
         user,
         password,
         host,
         port,
         secure = true, //使用安全传输协议,
         debug = false
-    }){
-        this._imap = new Imap({
+    }) {
+        let imap = new BaseImap({
             user,
             password,
             host,
@@ -23,28 +27,37 @@ module.exports = class {
                     console.log(info);
                 }
             }
-          });
+        });
+
+        await this._connect(imap);
+        return new Imap(imap);
     }
 
-    async list(box, filter, callback){
-        await this._connect(this._imap);
+    close() {
+        this._imap.end();
+    }
+
+    async index(box, filter) {
+        let that = this;
         await new Promise((resolve, reject) => {
-            this._imap.openBox(box, true, (err, data) => {
+            that._imap.openBox(box, true, (err, data) => {
                 if(err != undefined) return reject(err);
                 return resolve(data);
             });
         });
 
-        let emailList = await new Promise((resolve, reject) => {
-            this._imap.search(filter, function(err, results) {
+        return await new Promise((resolve, reject) => {
+            that._imap.search(filter, function(err, results) {
                 if(err != undefined) return reject(err);
                 return resolve(results);
             });
         });
+    }
 
+    async list(uidList, callback){
+        let that = this;
         return await new Promise((resolve, reject) => {
-            let that = this;
-            let incomming = this._imap.fetch(emailList, { bodies: ['HEADER'] });
+            let incomming = that._imap.fetch(uidList, { bodies: ['HEADER'] });
             let outgoing = [];
             incomming.on('message', function(msg, seqno) {
                 let emailObj = {};
@@ -57,15 +70,17 @@ module.exports = class {
                             state : true,
                             data : emailObj
                         });
-                        callback(null, emailObj.uid);
-                        if(outgoing.length == emailList.length){
+
+                        if (callback != undefined) callback(null, emailObj.uid);
+                        if(outgoing.length == uidList.length){
                             return resolve(outgoing);
                         }
-                    }).catch(err=>{
+                    }).catch(err => {
                         outgoing.push({
                             uid : emailObj.uid,
                             state : false
                         });
+                        if (callback != undefined) callback(err, emailObj.uid);
                     })
                 });
 
@@ -83,23 +98,22 @@ module.exports = class {
             });
 
             incomming.once('end', function(imap) {
-                that._imap.end();
+                // that._imap.end();
             });
         });
     }
 
     async  getDetail(box, uid) {
-        await this._connect(this._imap);
+        let that = this;
         await new Promise((resolve, reject) => {
-            this._imap.openBox(box, true, (err, data) => {
+            that._imap.openBox(box, true, (err, data) => {
                 if(err != undefined) return reject(err);
                 return resolve(data);
             });
         });
 
         return await new Promise((resolve, reject) => {
-            let that = this;
-            let incomming = this._imap.fetch([uid], { bodies: '' });
+            let incomming = that._imap.fetch([uid], { bodies: '' });
             let outgoing = [];
             incomming.on('message', function(msg, seqno) {
                 let emailObj = {};
@@ -127,52 +141,35 @@ module.exports = class {
             });
 
             incomming.once('end', function(imap) {
-                that._imap.end();
+                // that._imap.end();
             });
         }); 
     }
 
-    async verify(){
-        try {
-            let err = await this._connect(this._imap);
-            this._imap.end();
-            return {
-                state : 0
-            }
-        }
-        catch (err){
-            return {
-                state : 1,
-                message : err.message
-            }
-        }
-    }
-
     async getBox(){
-        await this._connect(this._imap);
+        let that = this;
         return await new Promise((resolve, reject) => {
-            this._imap.getBoxes((err, boxes) => {
+            that._imap.getBoxes((err, boxes) => {
                 if(err != undefined) return reject(err);
                 return resolve(boxes);
             });
         }).then((boxes) => {
-            this._imap.end();
+            // this._imap.end();
             return boxes;
         });
     }
 
     async addSign(box, uid, sign){
-        await this._connect(this._imap);
+        let that = this;
         await new Promise((resolve, reject) => {
-            this._imap.openBox(box, true, (err, data) => {
+            that._imap.openBox(box, true, (err, data) => {
                 if(err != undefined) return reject(err);
                 return resolve(data);
             });
         });
 
         await new Promise((resolve, reject) => {
-            let that = this;
-            this._imap.addFlags([uid], [], (err) => {
+            that._imap.addFlags([uid], [], (err) => {
                 if(err != undefined) {
                     return reject(err);
                 }
@@ -183,22 +180,21 @@ module.exports = class {
             });
         });
 
-        that._imap.end();
+        // that._imap.end();
         return ;
     }
 
     async delSign(box, uid, sign){
-        await this._connect(this._imap);
+        let that = this;
         await new Promise((resolve, reject) => {
-            this._imap.openBox(box, true, (err, data) => {
+            that._imap.openBox(box, true, (err, data) => {
                 if(err != undefined) return reject(err);
                 return resolve(data);
             });
         });
 
         await new Promise((resolve, reject) => {
-            let that = this;
-            this._imap.delFlags([uid], [], (err) => {
+            that._imap.delFlags([uid], [], (err) => {
                 if(err != undefined) {
                     return reject(err);
                 }
@@ -209,11 +205,11 @@ module.exports = class {
             });
         });
 
-        that._imap.end();
+        // that._imap.end();
         return ;
     }
 
-    async _connect(imap){
+    static async _connect(imap){
         return new Promise((resolve, reject) => {
             imap.once('ready', function() {
                 return resolve();
@@ -232,23 +228,23 @@ module.exports = class {
     }
 
     async _search(box, filter){
-        await this._connect(this._imap);
+        let that = this;
         await new Promise((resolve, reject) => {
-            this._imap.openBox(box, true, (err, data) => {
+            that._imap.openBox(box, true, (err, data) => {
                 if(err != undefined) return reject(err);
                 return resolve(data);
             });
         });
 
         return await new Promise((resolve, reject) => {
-            this._imap.search(filter, function(err, results) {
+            that._imap.search(filter, function(err, results) {
                 if(err != undefined) return reject(err);
                 return resolve(results);
             });
         });
     }
 
-    get EMAIL_TYPE() {
+    static get EMAIL_TYPE() {
         return {
             'ALL'  : 'ALL', //- All messages.
             'ANSWERED'  : 'ANSWERED', // - Messages with the Answered flag set.
@@ -267,7 +263,7 @@ module.exports = class {
         }
     }
 
-    get OPERATOR(){
+    static get OPERATOR(){
         return {
             'BEFORE' : 'BEFORE',// - Messages whose internal date (disregarding time and timezone) is earlier than the specified date.
             'ON' : 'ON',//  - Messages whose internal date (disregarding time and timezone) is within the specified date.
@@ -278,7 +274,7 @@ module.exports = class {
         }
     }
 
-    get SIGN(){
+    static get SIGN(){
         return {
             Seen : '\\Seen',
             Answered : '\\Answered',

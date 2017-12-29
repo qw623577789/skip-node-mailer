@@ -11,16 +11,16 @@ module.exports = {
             timeout: 3000,
             prepareRequest: function(dataset) {
                 return {
-                    username: "mail_tester@163.com",
+                    username: "mail_tester@126.com",
                     password: "14yhl9d",
                     receiveState: 1,
                     receiveProtocol: 1,
                     receiveUseSSL: 1,
-                    receiveServerAddress: "imap.163.com",
+                    receiveServerAddress: "imap.126.com",
                     receiveServerPort: 993,
                     postState: 1,
                     postUseSSL: 1,
-                    postServerAddress: "smtp.163.com",
+                    postServerAddress: "smtp.126.com",
                     postServerPort: 994
                 };
             },
