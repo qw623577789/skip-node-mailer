@@ -21,6 +21,11 @@ module.exports = async (request, notifyCallback) => {
         return filter[index] == 0;
     })
 
+    if (mailIndexList.length == 0) {
+        pop3.close();
+        return [];
+    }
+
     let processCallback = (error, uid) => {
         notifyCallback(error, mailIndexList.indexOf(uid), mailIndexList.length)
     }

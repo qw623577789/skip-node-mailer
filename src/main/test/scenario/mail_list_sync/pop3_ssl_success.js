@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "pop3_ssl同步邮件列表，应该成功",
+    name: "pop3_ssl同步邮件列表，应该新邮件数应该返回非0",
     prerequisites: [
     ],
     steps: [
@@ -20,7 +20,7 @@ module.exports = {
                 }
             },
             handleResponse: function({error, response}, dataset) {
-                assert(error == undefined, "sync failed");
+                assert(error == undefined && response != 0, "sync failed");
             }
         }
     ]

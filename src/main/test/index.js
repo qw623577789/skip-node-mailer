@@ -6,13 +6,13 @@ const Tester = require('@qtk/tester-framework');
 class AppExecuter extends Tester.Executer {
     async init() {
         if (fs.existsSync(__dirname + '/data')) {
-            //fs.unlinkSync(__dirname + '/data')
+            fs.unlinkSync(__dirname + '/data')
         }
-        //await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);
+        await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);
     }
 
     async fini() {
-        //fs.unlinkSync(__dirname + '/data')
+        fs.unlinkSync(__dirname + '/data')
     }
 
     async send(name, request, context) {

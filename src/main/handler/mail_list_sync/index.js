@@ -33,7 +33,8 @@ module.exports = async ({request}) => {
     }
 
     //step3. 通知前端刷新界面
-    if (GB.IsElectron == true)  GB.Module.IpcSender.send('mail_list_sync_finished')
+    return newMailList.length;
+
 }
 
 function imapParser(box, {imapUid, data}) {

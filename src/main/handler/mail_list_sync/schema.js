@@ -90,6 +90,7 @@ const request = {
 }
 
 const response = {
+    type: "integer"
 }
 
 module.exports = {request, response}
