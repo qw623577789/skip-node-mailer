@@ -33,7 +33,7 @@ module.exports =  {
                     case 'development':
                         return require('electron').app.getPath("userData")
                     case 'test':
-                        return process.cwd()
+                        return process.cwd() + "/test_data_dir"
                     default:
                         return require('electron').app.getPath("userData")
                 }

@@ -6,8 +6,9 @@ module.exports = {
 		index: "unique"
 	},
 	classify: {
-		type: "integer",
-		default: 0
+		type: "string",
+		length: 20,
+		default: "",
 	},
 	seen: {
 		type: "integer",

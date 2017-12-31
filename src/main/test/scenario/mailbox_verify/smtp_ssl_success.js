@@ -7,7 +7,7 @@ module.exports = {
     steps: [
         {
             name: "mailbox_verify",
-            timeout: 10000,
+            timeout: 100000,
             prepareRequest: function(dataset) {
                 return {
                     method: GB.Common.Constant.Method.POST,
@@ -20,6 +20,7 @@ module.exports = {
                 }
             },
             handleResponse: function({error, response}, dataset) {
+                console.log(response)
                 assert(error == undefined && response.state == 0, "login failed");
             }
         }

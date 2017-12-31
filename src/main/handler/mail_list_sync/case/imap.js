@@ -13,7 +13,7 @@ module.exports = async (request, notifyCallback) => {
     //step2. 缓存比较过滤
     let filter = await Promise.all(
         mailIndexList.map((uid) => {
-            return GB.Model.count("mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"imap":${uid}%`)).run()
+            return GB.Model.count("o_mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"imap":${uid}%`)).run()
         })
     );
     mailIndexList = mailIndexList.filter((item, index)  => {
@@ -39,7 +39,7 @@ module.exports = async (request, notifyCallback) => {
 
     filter = await Promise.all(
         mailList.map((item) => {
-            return GB.Model.count("mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"common":"${item.data.messageId}"%`)).run()
+            return GB.Model.count("o_mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"common":"${item.data.messageId}"%`)).run()
         })
     );
 

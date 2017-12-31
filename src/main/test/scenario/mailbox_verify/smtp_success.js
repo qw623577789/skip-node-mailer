@@ -7,7 +7,7 @@ module.exports = {
     steps: [
         {
             name: "mailbox_verify",
-            timeout: 10000,
+            timeout: 100000,
             prepareRequest: function(dataset) {
                 return {
                     method: GB.Common.Constant.Method.POST,

@@ -23,7 +23,7 @@ module.exports = {
                 return {};
             },
             handleResponse: function({error, response}, dataset) {
-                assert( response instanceof Array && response.length == 0,  "delete failed");
+                assert( response instanceof Array &&  response.findIndex((item) => item.username == dataset.step(-1).response[0].username) == -1,  "delete failed");
             }
         }
     ]

@@ -14,7 +14,7 @@ module.exports = async (request, notifyCallback) => {
     let filter = await Promise.all(
         mailIndexList.map((uid) => {
             let [index, pop3Uid] = uid.split(' ');
-            return GB.Model.count("mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"pop3":${pop3Uid}%`)).run()
+            return GB.Model.count("o_mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"pop3":${pop3Uid}%`)).run()
         })
     );
     mailIndexList = mailIndexList.filter((item, index)  => {
@@ -36,7 +36,7 @@ module.exports = async (request, notifyCallback) => {
 
     filter = await Promise.all(
         mailList.map((item) => {
-            return GB.Model.count("mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"common":"${item.data.messageId}"%`)).run()
+            return GB.Model.count("o_mail").where(GB.Model.Logic.statement('uniqueIdentifier', GB.Model.Ops.LIKE, `%"common":"${item.data.messageId}"%`)).run()
         })
     );
 

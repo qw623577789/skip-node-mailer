@@ -1,18 +1,44 @@
 process.env.NODE_ENV = "test";
 require(`${__dirname}/../env`);
 const fs = require("fs");
+const fsx = require('fs-extra');
+const walk = require('klaw-sync');
+const path = require('path');
 const Tester = require('@qtk/tester-framework');
 
 class AppExecuter extends Tester.Executer {
     async init() {
-        if (fs.existsSync(__dirname + '/data')) {
-            fs.unlinkSync(__dirname + '/data')
-        }
+        //清除历史数据
+        fsx.removeSync(__dirname + '/test_data_dir');
+        fsx.ensureDirSync(__dirname + '/test_data_dir');
+
+        //建库建表
         await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);
+
+        //初始化数据
+        let modelsDataConfig = walk(`${__dirname}/init/db/`, {
+            nodir: true
+        })
+        .map((item) => {
+            return {
+                dbName : item.path.replace(`${__dirname}/init/db/`, '').replace(/\.js/, ''),
+                path: item.path
+            }
+        });
+
+        for (let modelDataConfig of modelsDataConfig) {
+            let modelData = require(modelDataConfig.path);
+            for (let data of modelData) {
+                await GB.Model.insert(modelDataConfig.dbName).data(data).run()
+            }
+        }
+
+        // //拷贝文件
+        // fsx.copySync(`${__dirname}/init/file`, `${__dirname}/test_data_dir/attachments`)
     }
 
     async fini() {
-        fs.unlinkSync(__dirname + '/data')
+        //fs.removeSync(__dirname + '/data');
     }
 
     async send(name, request, context) {

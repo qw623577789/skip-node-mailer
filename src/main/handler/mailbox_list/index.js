@@ -1,7 +1,7 @@
 module.exports = async ({request}) => {
-    let mailboxs = await GB.Model.select("mailbox").run();
+    let mailboxs = await GB.Model.select("o_mailbox").run();
     if (mailboxs == undefined) mailboxs = [];
-    return mailboxs.map(({mailbox: item})=>{
+    return mailboxs.map(({o_mailbox: item})=>{
         return {
             username: item.username,
             password: item.password

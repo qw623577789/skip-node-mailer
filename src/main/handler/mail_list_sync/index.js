@@ -29,7 +29,7 @@ module.exports = async ({request}) => {
 
     //step2. 新邮件存储
     for (let mail of newMailList) {
-        await GB.Model.insert('mail').data(mail).run();
+        await GB.Model.insert('o_mail').data(mail).run();
     }
 
     //step3. 通知前端刷新界面

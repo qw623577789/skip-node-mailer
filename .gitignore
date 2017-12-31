@@ -12,4 +12,5 @@ thumbs.db
 .vscode
 /build/
 src/main/logs
+src/main/test/test_data_dir/
 *.log
