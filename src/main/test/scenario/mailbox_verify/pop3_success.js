@@ -10,8 +10,7 @@ module.exports = {
             timeout: 10000,
             prepareRequest: function(dataset) {
                 return {
-                    method: GB.Common.Constant.Method.RECEIVE,
-                    protocol: GB.Common.Constant.ReceiveProtocol.POP3,
+                    protocol: GB.Common.Constant.Protocol.POP3,
                     username: "qw623577789@126.com",
                     password: "5201314aS56",
                     address: "pop.126.com",

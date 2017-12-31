@@ -1,10 +1,8 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "重复添加邮箱,应该阻止",
-    prerequisites: [
-        require('./imap_smtp_success')
-    ],
+    name: "添加邮箱(pop3+smtp)，应该成功",
+    prerequisites: [],
     steps: [
         {
             name: "mailbox_add",
@@ -14,10 +12,10 @@ module.exports = {
                     username: "mail_tester@126.com",
                     password: "qwe123poi",
                     receiveState: 1,
-                    receiveProtocol: 2,
+                    receiveProtocol: 1,
                     receiveUseSSL: 1,
-                    receiveServerAddress: "imap.126.com",
-                    receiveServerPort: 993,
+                    receiveServerAddress: "pop.126.com",
+                    receiveServerPort: 995,
                     postState: 1,
                     postUseSSL: 1,
                     postServerAddress: "smtp.126.com",
@@ -25,7 +23,7 @@ module.exports = {
                 };
             },
             handleResponse: function({error, response}, dataset) {
-                assert(response !== undefined && response.state == 1,  "failed");
+                assert(response !== undefined && response.state == 0, "add failed");
             }
         }
     ]

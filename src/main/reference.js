@@ -62,6 +62,9 @@ module.exports =  {
             static get Smtp() {return require('./module/smtp')}
             static get SchemaValidater() {return require('./module/schema_validater')}
             static get IpcSender() {return require('./module/ipc_sender')}
+        },
+        Logic: class {
+            static get Incubator() {return require('./logic/incubator')}
         }
 }
 

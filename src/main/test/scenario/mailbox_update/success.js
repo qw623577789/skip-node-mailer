@@ -11,7 +11,7 @@ module.exports = {
             timeout: 3000,
             prepareRequest: function(dataset) {
                 return {
-                    username: dataset.step(-1).response[0].username,
+                    id: dataset.step(-1).response[0].id,
                     password: "12345"
                 }
             },

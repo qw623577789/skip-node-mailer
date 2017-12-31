@@ -9,7 +9,7 @@ module.exports = {
             name: "mailbox_delete",
             timeout: 3000,
             prepareRequest: function(dataset) {
-                return "1@1.com";
+                return "11952a1a92364931a010fd135075a892";
             },
             handleResponse: function({error, response}, dataset) {
                 assert( error !== undefined,  "failed");

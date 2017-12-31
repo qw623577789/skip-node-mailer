@@ -1,6 +1,7 @@
 const Pop = require('node-poplib-gowhich').Client;
+const EventEmitter = require('events').EventEmitter;
 
-module.exports = class Pop3{
+module.exports = class Pop3 extends EventEmitter{
     constructor(pop){
         this._pop = pop;
     }
@@ -24,11 +25,18 @@ module.exports = class Pop3{
           });
 
           await this._connect(pop);
-          return new Pop3(pop);
+          
+          let instance = new Pop3(pop);instance.
+          pop.disconnect(() => {instance.emit('diconnect')})
+          return instance;
     }
 
     close() {
         this._pop.quit();
+    }
+
+    get isOnline() {
+        return this._pop.connected
     }
 
     async  index() {

@@ -1,12 +1,4 @@
-module.exports = async (request, notifyCallback) => {
-    let pop3 = await GB.Module.Pop3.getinstance({
-        user: request.username,
-        password: request.password,
-        host: request.address,
-        port: request.port,
-        secure: request.useSSL == 1 ? true:false
-    });
-
+module.exports = async (pop3, notifyCallback) => {
     //step1. 获取uid列表
     let mailIndexList = await pop3.index();
 

@@ -1,4 +1,10 @@
 module.exports = {
+	id: {
+		type: "string",
+		length: 32,
+		default: "",
+		index: "unique"
+	},
 	username: {
 		type: "string",
 		length: 32,

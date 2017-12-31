@@ -15,14 +15,23 @@ module.exports = async ({request}) => {
 
     let newMailList = [];
 
-    //step1. 远程比对同步
-    switch (request.protocol) {
-        case GB.Common.Constant.ReceiveProtocol.POP3:
-            newMailList = (await require('./case/pop3')(request, progressNotify))
+    let [row] = GB.Model.select('o_mailbox').where(GB.Model.Logic.statement('id', '=', request.mailboxId)).run();
+    if (row == undefined) {
+        throw new Error(`mailbox:${request.mailboxId} is not existed`)
+    }
+    let {o_mailbox: mailbox} = row;
+
+    //step1. 获取实例
+    let instance = await GB.Logic.Incubator.get(request.mailboxId, mailbox.receiveProtocol);
+
+    //step2. 远程比对同步
+    switch (mailbox.receiveProtocol) {
+        case GB.Common.Constant.Protocol.POP3:
+            newMailList = (await require('./case/pop3')(instance, reque.box, progressNotify))
             .map(item => pop3Parser(request.box, item));
             break;
-        case GB.Common.Constant.ReceiveProtocol.IMAP:
-            newMailList = (await require('./case/imap')(request, progressNotify))
+        case GB.Common.Constant.Protocol.IMAP:
+            newMailList = (await require('./case/imap')(instance, progressNotify))
             .map(item => imapParser(request.box, item));
             break;
     }
@@ -30,6 +39,10 @@ module.exports = async ({request}) => {
     //step2. 新邮件存储
     for (let mail of newMailList) {
         await GB.Model.insert('o_mail').data(mail).run();
+        await GB.Model.insert('r_mailbox_mail').data({
+            mailbox_id: request.mailboxId,
+            mail_id: mail.id
+        }).run();
     }
 
     //step3. 通知前端刷新界面

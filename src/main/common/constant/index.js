@@ -1,14 +1,8 @@
 module.exports = {
-    Method: {
-        POST: 1,
-        RECEIVE: 2
-    },
-    ReceiveProtocol: {
+    Protocol: {
         POP3: 1,
-        IMAP: 2
-    },
-    PostProtocol: {
-        STMP: 1
+        IMAP: 2,
+        STMP: 3
     },
     Mail: {
         Classify: {

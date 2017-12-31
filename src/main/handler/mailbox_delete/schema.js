@@ -1,6 +1,6 @@
 const request = {
     type: "string",
-    pattern: "^(.+)@(.+)$"
+    length: 32
 }
 
 const response = {}

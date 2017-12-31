@@ -25,7 +25,7 @@ const request = {
         receiveProtocol: {
             type: "integer",
             description: "收信协议",
-            enum: Object.values(GB.Common.Constant.ReceiveProtocol)
+            enum: [GB.Common.Constant.Protocol.IMAP, GB.Common.Constant.Protocol.POP3]
         },
         receiveUseSSL: {
             type: "integer",
@@ -67,8 +67,53 @@ const request = {
 }
 
 const response = {
-    type: "integer",
-    enum: Object.values(constant.ResponseState)
+    type: "object",
+    switch: [
+        {
+            if: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.ResponseState.SUCCESS]
+                    }
+                }
+            },
+            then: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.ResponseState.SUCCESS]
+                    },
+                    mailboxId: {
+                        type: "string",
+                        length: 32
+                    }
+                },
+                additionalProperties: false,
+                required: ['state', 'mailboxId']
+            }
+        },
+        {
+            if: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.ResponseState.HAD_EXISTED]
+                    }
+                }
+            },
+            then: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.ResponseState.HAD_EXISTED]
+                    }
+                },
+                additionalProperties: false,
+                required: ['state']
+            }
+        }
+    ]
 }
 
 module.exports = {constant, request, response}

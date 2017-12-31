@@ -1,14 +1,6 @@
-module.exports = async (request, notifyCallback) => {
-    let imap = await GB.Module.Imap.getinstance({
-        user: request.username,
-        password: request.password,
-        host: request.address,
-        port: request.port,
-        secure: request.useSSL == 1 ? true:false
-    });
-
+module.exports = async (imap, box, notifyCallback) => {
     //step1. 获取uid列表
-    let mailIndexList = await imap.index(request.box, [GB.Module.Imap.EMAIL_TYPE.ALL]);
+    let mailIndexList = await imap.index(box, [GB.Module.Imap.EMAIL_TYPE.ALL]);
 
     //step2. 缓存比较过滤
     let filter = await Promise.all(
@@ -53,6 +45,5 @@ module.exports = async (request, notifyCallback) => {
         }
     });
 
-    imap.close();
     return mailList;
 }

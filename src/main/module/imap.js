@@ -30,11 +30,18 @@ module.exports = class Imap{
         });
 
         await this._connect(imap);
-        return new Imap(imap);
+        let instance = new Imap(imap);
+        imap.on('close', (hadError) => {instance.emit('close')});
+        imap.on('error', (error) => {instance.emit('error', error)});
+        return instance;
     }
 
     close() {
         this._imap.end();
+    }
+
+    get isOnline() {
+        return this._imap.state == 'connected'
     }
 
     async index(box, filter) {
@@ -211,16 +218,12 @@ module.exports = class Imap{
 
     static async _connect(imap){
         return new Promise((resolve, reject) => {
-            imap.once('ready', function() {
+            imap.on('ready', function() {
                 return resolve();
             });
     
-            imap.once('error', function(err) {
+            imap.on('error', function(err) {
               return reject(err);
-            });
-            
-            imap.once('end', function() {
-
             });
 
             imap.connect();

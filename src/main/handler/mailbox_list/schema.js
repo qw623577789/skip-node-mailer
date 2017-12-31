@@ -13,11 +13,15 @@ const response = {
                 type: "string",
                 pattern: "^(.+)$",
                 maxLength : 32
+            },
+            id: {
+                type: "string",
+                maxLength : 32
             }
         },
         additionalProperties: false,
         required: [
-            "username", "password"
+            "username", "password", "id"
         ]
     }
 }

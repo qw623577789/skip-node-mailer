@@ -6,3 +6,6 @@ global.Tray = null;
 
 //全局模块
 global.GB = require('./reference');
+
+//全局孵化器
+global.Incubator = new GB.Logic.Incubator();

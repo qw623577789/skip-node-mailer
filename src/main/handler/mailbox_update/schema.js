@@ -1,6 +1,10 @@
 const request = {
     type: "object",
     properties: {
+        id: {
+            type: "string",
+            length: 32
+        },
         username: {
             type: "string",
             pattern: "^(.+)@(.+)$"
@@ -16,7 +20,7 @@ const request = {
         receiveProtocol: {
             type: "integer",
             description: "收信协议",
-            enum: Object.values(GB.Common.Constant.ReceiveProtocol)
+            enum: [GB.Common.Constant.Protocol.IMAP, GB.Common.Constant.Protocol.POP3]
         },
         receiveUseSSL: {
             type: "integer",
@@ -49,7 +53,7 @@ const request = {
     },
     additionalProperties: false,
     required: [
-        "username"
+        "id"
     ]
 }
 

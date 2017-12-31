@@ -1,6 +1,7 @@
 const nodeMailer = require('nodemailer');
+const EventEmitter = require('events').EventEmitter;
 
-module.exports = class Smtp{
+module.exports = class Smtp extends EventEmitter{
     constructor(smtp) {
         this._smtp = smtp;
     }
@@ -26,6 +27,16 @@ module.exports = class Smtp{
         });
 
         return new Smtp(smtp);
+    }
+
+    async get isOnline() {
+        try {
+            await this.verify();
+            return true;
+        }
+        catch (error) {
+            return false;
+        }
     }
 
     async verify(){

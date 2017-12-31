@@ -3,6 +3,7 @@ module.exports = async ({request}) => {
     if (mailboxs == undefined) mailboxs = [];
     return mailboxs.map(({o_mailbox: item})=>{
         return {
+            id: item.id,
             username: item.username,
             password: item.password
         }
