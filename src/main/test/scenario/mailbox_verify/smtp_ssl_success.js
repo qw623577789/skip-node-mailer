@@ -10,7 +10,7 @@ module.exports = {
             timeout: 100000,
             prepareRequest: function(dataset) {
                 return {
-                    protocol: GB.Common.Constant.Protocol.IMAP,
+                    protocol: GB.Common.Constant.Protocol.STMP,
                     username: "mail_tester@126.com",
                     password: "qwe123poi",
                     address: "smtp.126.com",

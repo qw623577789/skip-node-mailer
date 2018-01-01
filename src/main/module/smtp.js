@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter;
 
 module.exports = class Smtp extends EventEmitter{
     constructor(smtp) {
+        super();
         this._smtp = smtp;
     }
 
@@ -12,7 +13,7 @@ module.exports = class Smtp extends EventEmitter{
         host,
         port,
         secure = true, //使用安全传输协议
-        debug = false
+        debug = true
     }) {
         let smtp = nodeMailer.createTransport({
             host,
@@ -25,11 +26,10 @@ module.exports = class Smtp extends EventEmitter{
             debug,
             logger : debug
         });
-
         return new Smtp(smtp);
     }
 
-    async get isOnline() {
+    async isOnline() {
         try {
             await this.verify();
             return true;

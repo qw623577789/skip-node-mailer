@@ -2,44 +2,38 @@
 
 const fs = require('fs');
 
-module.exports = async ({request}) => {
+module.exports = async ({request: mailId}) => {
     //本地缓存查找
-    let [{mail}] = await GB.Model.select("o_mail").where(
-        GB.Model.Logic.statement('id', '=', request.id)
+    let [{o_mail: mail}] = await GB.Model.select("o_mail").where(
+        GB.Model.Logic.statement('id', '=', mailId)
     ).run();
 
     //若需要，从远程拉取
     if (mail.content == "") {
         let rawMail = null;
         let localMail = null;
-        switch (request.protocol) {
-            case GB.Common.Constant.ReceiveProtocol.POP3:
-                let pop3 = await GB.Module.Pop3.getinstance({
-                    user: request.username,
-                    password: request.password,
-                    host: request.address,
-                    port: request.port,
-                    secure: request.useSSL == 1 ? true:false
-                });
-                let {popUid} = JSON.parse(mail.uniqueIdentifier);
-                let lastestPopUidInfo = (await pop3.index())
+        let [{r_mailbox_mail: {mailbox_id: mailboxId}}] = await GB.Model.select('r_mailbox_mail').where(
+            GB.Model.Logic.statement('mail_id', '=', mailId)
+        ).run();
+
+        let [{o_mailbox: mailbox}] = await  GB.Model.select('o_mailbox').where(GB.Model.Logic.statement('id', '=', mailboxId)).run();
+
+        let mailboxInstance = await GB.Logic.Incubator.get(mailboxId, mailbox.receiveProtocol);
+        switch (mailbox.receiveProtocol) {
+            case GB.Common.Constant.Protocol.POP3:
+                let {pop3: popUid} = JSON.parse(mail.uniqueIdentifier);
+                let lastestPopUidInfo = (await mailboxInstance.index())
                 .find((item) => {
                     let [index, lastestPopUid] = item.split(' ');
                     return lastestPopUid == popUid;
                 })
-                rawMail = await pop3.getDetail(mail.classify, lastestPopUidInfo.split(' ')[0]);
+
+                rawMail = await mailboxInstance.getDetail(lastestPopUidInfo.split(' ')[0]);
                 localMail = pop3Parser(rawMail);
                 break;
-            case GB.Common.Constant.ReceiveProtocol.IMAP:
-                let imap = await GB.Module.Imap.getinstance({
-                    user: request.username,
-                    password: request.password,
-                    host: request.address,
-                    port: request.port,
-                    secure: request.useSSL == 1 ? true:false
-                });
-                let {imapUid} = JSON.parse(mail.uniqueIdentifier);
-                rawMail = await imap.getDetail(mail.classify, imapUid);
+            case GB.Common.Constant.Protocol.IMAP:
+                let {imap: imapUid} = JSON.parse(mail.uniqueIdentifier);
+                rawMail = await mailboxInstance.getDetail(mail.classify, imapUid);
                 localMail = imapParser(rawMail);
                 break;
         }
@@ -48,7 +42,7 @@ module.exports = async ({request}) => {
             content: localMail.content,
             attachments: JSON.stringify(localMail.attachments),
         }).where(
-            GB.Model.Logic.statement('id', '=', request.id)
+            GB.Model.Logic.statement('id', '=', mailId)
         ).run();
 
         mail.content = localMail.content;
@@ -58,14 +52,14 @@ module.exports = async ({request}) => {
     //mail对象反序列化
     mail.from = JSON.parse(mail.from);
     mail.to = JSON.parse(mail.to);
-    if (mail.bc == undefined) {
+    if (mail.bc == '') {
         delete mail.bc;
     }
     else {
         mail.bc = JSON.parse(mail.bc)
     }
 
-    if (mail.cc == undefined) {
+    if (mail.cc == '') {
         delete mail.cc;
     }
     else {
@@ -77,41 +71,50 @@ module.exports = async ({request}) => {
 }
 
 function imapParser(data) {
-    return {
+    let parseData =  {
         content: data.html,
         attachments: {
-            has: data.headers.get('content-type').value.indexOf('multipart/mixed') != -1,
-            items: data.attachments.length == 0 ? undefined : data.attachments.map((attachment) => {
-                let cacheName = GB.Common.Toolbox.uuid();
-                fs.writeFileSync(GB.Path.Data + "/attachments/" + cacheName, attachment.content);
-                return {
-                    contentType: attachment.contentType,
-                    filename: attachment.filename,
-                    md5: attachment.checksum,
-                    size: attachment.size,
-                    cacheName: cacheName
-                }
-            })
+            has: data.headers.get('content-type').value.indexOf('multipart/mixed') != -1
         }
     }
+
+    if (data.attachments.length != 0 ) {
+        parseData.attachments.items = data.attachments.map((attachment) => {
+            let cacheName = GB.Common.Toolbox.uuid();
+            fs.writeFileSync(GB.Path.Data + "/attachments/" + cacheName, attachment.content);
+            return {
+                contentType: attachment.contentType,
+                filename: attachment.filename,
+                md5: attachment.checksum,
+                size: attachment.size,
+                cacheName: cacheName
+            }
+        })
+    }
+    
+    return parseData;
 }
 
 function pop3Parser(data) {
-    return {
+    let parseData =  {
         content: data.html,
         attachments: {
-            has: data.headers.get('content-type').value.indexOf('multipart/mixed') != -1,
-            items: data.attachments.length == 0 ? undefined : data.attachments.map((attachment) => {
-                let cacheName = GB.Common.Toolbox.uuid();
-                fs.writeFileSync(GB.Path.Data + "/attachments/" + cacheName, attachment.content);
-                return {
-                    contentType: attachment.contentType,
-                    filename: attachment.filename,
-                    md5: attachment.checksum,
-                    size: attachment.length,
-                    cacheName: cacheName
-                }
-            })
+            has: data.headers['content-type'].indexOf('multipart/mixed') != -1
         }
     }
+
+    if (data.attachments != undefined) {
+        parseData.attachments.items = data.attachments.map((attachment) => {
+            let cacheName = GB.Common.Toolbox.uuid();
+            fs.writeFileSync(GB.Path.Data + "/attachments/" + cacheName, attachment.content);
+            return {
+                contentType: attachment.contentType,
+                filename: attachment.filename,
+                md5: attachment.checksum,
+                size: attachment.length,
+                cacheName: cacheName
+            }
+        })
+    }
+    return parseData;
 }

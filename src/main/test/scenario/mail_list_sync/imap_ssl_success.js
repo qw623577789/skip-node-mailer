@@ -3,6 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "imap_ssl同步邮件列表，应该新邮件数应该返回非0",
     prerequisites: [
+        require('../mailbox_add/imap_smtp_success')
     ],
     steps: [
         {
@@ -11,12 +12,7 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     box: GB.Common.Constant.Mail.Classify.INBOX,
-                    protocol: GB.Common.Constant.ReceiveProtocol.IMAP,
-                    username: "mail_tester@126.com",
-                    password: "qwe123poi",
-                    address: "imap.126.com",
-                    port: 993,
-                    useSSL: 1
+                    mailboxId: dataset.step(-1).response.mailboxId
                 }
             },
             handleResponse: function({error, response}, dataset) {

@@ -1,37 +1,6 @@
 const request = {
-    type: "object",
-    properties: {
-        id: {
-            type: "string",
-            length: 32
-        },
-        username: {
-            type: "string",
-            pattern: "^(.+)@(.+)$"
-        },
-        password: {
-            type: "string",
-            pattern: "^(.+)$"
-        },
-        protocol: {
-            type: "integer",
-            enum: Object.values(GB.Common.Constant.ReceiveProtocol)
-        },
-        useSSL: {
-            type: "integer",
-            enum: [0, 1]
-        },
-        address: {
-            type: "string",
-            pattern: "^(.+)$"
-        },
-        port: {
-            type: "integer",
-            default: 0
-        }
-    },
-    additionalProperties: false,
-    required: ["id", "username", "password", "protocol", "useSSL", "address", "port"]
+    type: "string",
+    length: 32
 }
 
 const response = {
@@ -123,7 +92,7 @@ const response = {
             type: "string"
         },
         attachments: {
-            type: "obejct",
+            type: "object",
             properties: {
                 has: {
                     type: "boolean"

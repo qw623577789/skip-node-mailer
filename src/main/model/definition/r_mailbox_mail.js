@@ -8,6 +8,7 @@ module.exports = {
 	mail_id: {
 		type: "string",
 		length: 32,
-		default: ""
+		default: "",
+		index: "ordinary"
 	}
 }

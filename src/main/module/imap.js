@@ -1,10 +1,14 @@
 const BaseImap = require('imap')
 const MailParser = require("mailparser").MailParser
+const EventEmitter = require('events').EventEmitter;
 const fs = require("fs")
 
-module.exports = class Imap{
+module.exports = class Imap extends EventEmitter {
     constructor(imap){
+        super();
         this._imap = imap;
+        this._imap.on('close', (hadError) => {this.emit('close', hadError)});
+        this._imap.on('error', (error) => {this.emit('error', error)});
     }
     
     static async getinstance({
@@ -30,17 +34,14 @@ module.exports = class Imap{
         });
 
         await this._connect(imap);
-        let instance = new Imap(imap);
-        imap.on('close', (hadError) => {instance.emit('close')});
-        imap.on('error', (error) => {instance.emit('error', error)});
-        return instance;
+        return new Imap(imap);
     }
 
     close() {
         this._imap.end();
     }
 
-    get isOnline() {
+    isOnline() {
         return this._imap.state == 'connected'
     }
 

@@ -8,4 +8,4 @@ global.Tray = null;
 global.GB = require('./reference');
 
 //全局孵化器
-global.Incubator = new GB.Logic.Incubator();
+global.Incubator = new (require('./logic/incubator'))();

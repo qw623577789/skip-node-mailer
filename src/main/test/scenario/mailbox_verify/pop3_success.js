@@ -11,8 +11,8 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     protocol: GB.Common.Constant.Protocol.POP3,
-                    username: "qw623577789@126.com",
-                    password: "5201314aS56",
+                    username: "mail_tester@126.com",
+                    password: "qwe123poi",
                     address: "pop.126.com",
                     port: 110,
                     useSSL: 0

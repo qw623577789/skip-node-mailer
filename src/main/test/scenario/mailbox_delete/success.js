@@ -3,7 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "删除一个邮箱，应该成功",
     prerequisites: [
-        require('../mailbox_list/success')
+        require('../mailbox_list/imap_smtp_success')
     ],
     steps: [
         {

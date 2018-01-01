@@ -3,7 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "pop3_ssl同步邮件列表,再用pop3同步，应该返回新邮件数为0",
     prerequisites: [
-        require('../mail_list_sync/pop3_ssl_success')
+        require('./pop3_ssl_success')
     ],
     steps: [
         {
@@ -12,12 +12,7 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     box: GB.Common.Constant.Mail.Classify.INBOX,
-                    protocol: GB.Common.Constant.ReceiveProtocol.POP3,
-                    username: "mail_tester@126.com",
-                    password: "qwe123poi",
-                    address: "pop.126.com",
-                    port: 995,
-                    useSSL: 1
+                    mailboxId: dataset.step(-2).response.mailboxId
                 }
             },
             handleResponse: function({error, response}, dataset) {

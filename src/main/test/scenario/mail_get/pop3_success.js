@@ -1,9 +1,9 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "imap首次读取邮件，从远程拉取，应该成功",
+    name: "pop3首次读取邮件，从远程拉取，应该成功",
     prerequisites: [
-        require("../mail_list_sync/imap_ssl_success")
+        require("../mail_list_sync/pop3_ssl_success")
     ],
     steps: [
         {

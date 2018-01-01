@@ -64,7 +64,7 @@ module.exports =  {
             static get IpcSender() {return require('./module/ipc_sender')}
         },
         Logic: class {
-            static get Incubator() {return require('./logic/incubator')}
+            static get Incubator() {return global.Incubator;}
         }
 }
 

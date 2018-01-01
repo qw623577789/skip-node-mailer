@@ -15,7 +15,7 @@ module.exports = async ({request}) => {
 
     let newMailList = [];
 
-    let [row] = GB.Model.select('o_mailbox').where(GB.Model.Logic.statement('id', '=', request.mailboxId)).run();
+    let [row] = await GB.Model.select('o_mailbox').where(GB.Model.Logic.statement('id', '=', request.mailboxId)).run();
     if (row == undefined) {
         throw new Error(`mailbox:${request.mailboxId} is not existed`)
     }
@@ -27,11 +27,11 @@ module.exports = async ({request}) => {
     //step2. 远程比对同步
     switch (mailbox.receiveProtocol) {
         case GB.Common.Constant.Protocol.POP3:
-            newMailList = (await require('./case/pop3')(instance, reque.box, progressNotify))
+            newMailList = (await require('./case/pop3')(instance, progressNotify))
             .map(item => pop3Parser(request.box, item));
             break;
         case GB.Common.Constant.Protocol.IMAP:
-            newMailList = (await require('./case/imap')(instance, progressNotify))
+            newMailList = (await require('./case/imap')(instance, request.box, progressNotify))
             .map(item => imapParser(request.box, item));
             break;
     }
