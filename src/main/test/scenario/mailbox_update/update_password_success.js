@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "更新一个邮箱信息，应该成功",
+    name: "更新一个邮箱密码信息，应该成功",
     prerequisites: [
         require('../mailbox_list/imap_smtp_success')
     ],
@@ -12,7 +12,12 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     id: dataset.step(-1).response[0].id,
-                    password: "12345"
+                    mailbox: {
+                        username: dataset.step(-1).response[0].mailbox.username,
+                        password: "12345",
+                        receive: dataset.step(-1).response[0].mailbox.receive,
+                        post: dataset.step(-1).response[0].mailbox.post
+                    }
                 }
             },
             handleResponse: function({error, response}, dataset) {
@@ -26,7 +31,7 @@ module.exports = {
                 return {};
             },
             handleResponse: function({error, response}, dataset) {
-                assert(response[0].password == "12345",  "update failed");
+                assert(response[0].mailbox.password == "12345",  "update failed");
             }
         }
     ]

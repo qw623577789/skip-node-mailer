@@ -28,7 +28,7 @@ module.exports = {
 		type: "integer",
 		default: 0
 	},
-	receiveServerAddress: {
+	receiveServerHost: {
 		type: "string",
 		length: 32,
 		default: ""
@@ -45,7 +45,7 @@ module.exports = {
 		type: "integer",
 		default: 0
 	},
-	postServerAddress: {
+	postServerHost: {
 		type: "string",
 		length: 32,
 		default: ""

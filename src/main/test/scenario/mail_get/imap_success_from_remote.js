@@ -1,9 +1,9 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "pop3首次读取邮件，从远程拉取，应该成功",
+    name: "imap首次读取邮件，从远程拉取，应该成功",
     prerequisites: [
-        require("../mail_list_sync/pop3_ssl_success")
+        require("../mail_list_sync/imap_ssl_success")
     ],
     steps: [
         {
@@ -28,7 +28,7 @@ module.exports = {
                 return dataset.step(-1).response[0].id;
             },
             handleResponse: function({error, response}, dataset) {
-                assert(response !== undefined, "add failed");
+                assert(response !== undefined && response.fromCache == false, "get failed");
             }
         }
     ]

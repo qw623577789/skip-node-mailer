@@ -7,14 +7,8 @@ const request = {
         pageSize: {
             type: "integer"
         },
-        mailboxId: {
-            type: "string",
-            maxLength : 32
-        },
-        classify: {
-            type: "string",
-            enum: Object.values(GB.Common.Constant.Mail.Classify)
-        },
+        mailboxId: GB.Common.Schema.common.uuid,
+        classify: GB.Common.Schema.common.email.classify,
         query: {
             type: "object",
             properties: {
@@ -55,48 +49,35 @@ const response = {
     items: {
         type: "object",
         properties: {
-            id: {
-                type: "string",
-                length: 32
-            },
-            seen: {
-                type: "integer",
-                enum: [0 ,1]
-            },
-            from: {
-                type: "array",
-                items: {
-                    type: "object",
-                    properties: {
-                        name: {
-                            type: "string"
-                        },
-                        address: {
-                            type: "string"
-                        }
+            id: GB.Common.Schema.common.uuid,
+            intro: {
+                properties: {
+                    seen: {
+                        type: "integer",
+                        enum: [0 ,1]
                     },
-                    additionalProperties: false,
-                    required: ["name", "address"]
-                }
-            },
-            subject: {
-                type: "string"
-            },
-            content: {
-                type: "string"
-            },
-            hasAttachment: {
-                type: "boolean",
-            },
-            priority: {
-                type: "integer"
-            },
-            sendTime: {
-                type: "integer"
+                    from: {
+                        type: "array",
+                        items: GB.Common.Schema.model.address
+                    },
+                    subject: {
+                        type: "string"
+                    },
+                    content: {
+                        type: "string"
+                    },
+                    hasAttachment: {
+                        type: "boolean",
+                    },
+                    priority: GB.Common.Schema.common.email.priority,
+                    sendTime: GB.Common.Schema.common.timestamp
+                },
+                additionalProperties: false,
+                required: ['seen', 'from', 'subject', 'content', 'hasAttachment', 'priority', 'sendTime']
             }
         },
         additionalProperties: false,
-        required: ['id', 'seen', 'from', 'subject', 'content', 'hasAttachment', 'priority', 'sendTime']
+        required: ['id', 'intro']
     }
 }
 

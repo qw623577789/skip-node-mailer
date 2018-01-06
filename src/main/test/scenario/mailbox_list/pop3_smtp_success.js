@@ -3,7 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "列出邮箱列表(pop3_imap)，应该成功",
     prerequisites: [
-        require('../mailbox_add/imap_smtp_success')
+        require('../mailbox_add/126_imap_smtp_success')
     ],
     steps: [
         {

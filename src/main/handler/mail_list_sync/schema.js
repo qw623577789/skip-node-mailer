@@ -1,20 +1,13 @@
 const request = {
     type: "object",
     properties: {
-        box: {
-            type: "string",
-            enum: Object.values(GB.Common.Constant.Mail.Classify)
-        },
-        mailboxId: {
-            type: "string",
-            length: 32
-        }
+        box: GB.Common.Schema.common.email.classify,
+        mailboxId: GB.Common.Schema.common.uuid
     },
     additionalProperties: false,
     required: ["box", "mailboxId"]
 }
 
-const response = {
-}
+const response = {}
 
 module.exports = {request, response}

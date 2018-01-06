@@ -11,9 +11,9 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     protocol: GB.Common.Constant.Protocol.STMP,
-                    username: "mail_tester@126.com",
-                    password: "qwe123po1i",
-                    address: "smtp.126.com",
+                    username: "mail_tester2@sina.com",
+                    password: "14yhl9di",
+                    host: "smtp.sina.com",
                     port: 25,
                     useSSL: 0
                 }

@@ -55,6 +55,7 @@ module.exports =  {
         Common: class {
             static get Toolbox() {return require('./common/toolbox')}
             static get Constant() {return require('./common/constant')}
+            static get Schema() {return require('./common/schema')}
         },
         Module: class {
             static get Imap() {return require('./module/imap')}

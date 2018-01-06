@@ -14,6 +14,10 @@ module.exports = {
 		type: "integer",
 		default: 0
 	},
+	headers: {
+		type: "string",
+		default: ""
+	},
 	uniqueIdentifier: {
 		type: "string",
 		default: ""

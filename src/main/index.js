@@ -29,6 +29,11 @@ async function initData() {
   if (!fs.existsSync(`${GB.Path.Data}/data`)) {
     await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);
   }
+
+  //初始化附件文件夹
+  if (!fs.existsSync(`${GB.Path.Data}/attachments`)) {
+    fs.mkdirSync(`${GB.Path.Data}/attachments`);
+  }
 }
 
 function createWindow () {

@@ -3,6 +3,7 @@
 const fs = require('fs');
 
 module.exports = async ({request: mailId}) => {
+    let fromCache = true;
     //本地缓存查找
     let [{o_mail: mail}] = await GB.Model.select("o_mail").where(
         GB.Model.Logic.statement('id', '=', mailId)
@@ -10,6 +11,7 @@ module.exports = async ({request: mailId}) => {
 
     //若需要，从远程拉取
     if (mail.content == "") {
+        fromCache = false;
         let rawMail = null;
         let localMail = null;
         let [{r_mailbox_mail: {mailbox_id: mailboxId}}] = await GB.Model.select('r_mailbox_mail').where(
@@ -52,6 +54,8 @@ module.exports = async ({request: mailId}) => {
     //mail对象反序列化
     mail.from = JSON.parse(mail.from);
     mail.to = JSON.parse(mail.to);
+    mail.uniqueIdentifier = JSON.parse(mail.uniqueIdentifier);
+    mail.headers = JSON.parse(mail.headers);
     if (mail.bc == '') {
         delete mail.bc;
     }
@@ -67,7 +71,9 @@ module.exports = async ({request: mailId}) => {
     }
 
     mail.attachments = mail.attachments instanceof Object ? mail.attachments : JSON.parse(mail.attachments);
-    return mail;
+    delete mail.id;
+
+    return {id: mailId, mail, fromCache};
 }
 
 function imapParser(data) {
@@ -109,7 +115,7 @@ function pop3Parser(data) {
             fs.writeFileSync(GB.Path.Data + "/attachments/" + cacheName, attachment.content);
             return {
                 contentType: attachment.contentType,
-                filename: attachment.filename,
+                filename: attachment.fileName,
                 md5: attachment.checksum,
                 size: attachment.length,
                 cacheName: cacheName

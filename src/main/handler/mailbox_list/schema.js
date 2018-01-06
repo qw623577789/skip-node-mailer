@@ -5,23 +5,12 @@ const response = {
     item: {
         type: "object",
         properties: {
-            username: {
-                type: "string",
-                pattern: "^(.+)@(.+)$"
-            },
-            password: {
-                type: "string",
-                pattern: "^(.+)$",
-                maxLength : 32
-            },
-            id: {
-                type: "string",
-                maxLength : 32
-            }
+            id: GB.Common.Schema.common.uuid,
+            mailbox: GB.Common.Schema.model.mailbox
         },
         additionalProperties: false,
         required: [
-            "username", "password", "id"
+            "mailbox", "id"
         ]
     }
 }

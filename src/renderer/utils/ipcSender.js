@@ -8,8 +8,11 @@ export class IpcSender {
     }
 
     static sendSync(method, data) {
-        return ipcRenderer.sendSync("method", JSON.stringify({
+        let {status, payload} = JSON.parse(ipcRenderer.sendSync("method", JSON.stringify({
             mode : "sync", method, data
-        }));
+        })));
+
+        if (status != 0) throw new Error('server error');
+        return payload;
     }
 }

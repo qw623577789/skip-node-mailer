@@ -3,7 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "imap_ssl同步邮件列表,再用pop3同步，应该返回新邮件数为0",
     prerequisites: [
-        require('../mailbox_add/imap_smtp_success')
+        require('../mailbox_add/126_imap_smtp_success')
     ],
     steps: [
         {
@@ -25,11 +25,18 @@ module.exports = {
             prepareRequest: function(dataset) {
                 return {
                     id: dataset.step(-2).response.mailboxId,
-                    receiveState: 1,
-                    receiveProtocol: 1,
-                    receiveUseSSL: 1,
-                    receiveServerAddress: "pop.126.com",
-                    receiveServerPort: 995,
+                    mailbox: {
+                        username: dataset.step(-2).request.username,
+                        password: dataset.step(-2).request.password,
+                        receive: {
+                            state: 1,
+                            protocol: 1,
+                            useSSL: 1,
+                            serverHost: "pop.126.com",
+                            serverPort: 995,
+                        },
+                        post: dataset.step(-2).request.post,
+                    }
                 }
             },
             handleResponse: function({error, response}, dataset) {

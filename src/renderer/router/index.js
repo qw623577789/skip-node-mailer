@@ -22,7 +22,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/outbox'
+      redirect: '/inbox'
     }
   ]
 })

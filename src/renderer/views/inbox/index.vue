@@ -102,7 +102,7 @@
               methods : {
                   systemConfigBtnClick: function() {
 
-
+                    this.ipcSender.send('mailbox_list');
 
                     //this.ipcSender.send('system_config_window_operate', 'show');
                   },
@@ -127,7 +127,9 @@
                     console.log("scrollBottom")
                   },
                   emailBlockSelect: function(){
-                    console.log("eeeeee")
+                    console.log(this.ipcSender.sendSync('mailbox_list'));
+                    alert(this.ipcSender.sendSync('mailbox_list'));
+                    //console.log("eeeeee")
                   },
                   emailBlockMenuShow: function(){
                     this.ipcSender.send('email_list_operate', 'showEmailBlockMenu');

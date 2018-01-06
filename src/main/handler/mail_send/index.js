@@ -1,10 +1,6 @@
 const path = require("path");
 
-module.exports = async ({request}) => {
-    let [{o_mailbox: mailbox}] = await GB.Model.select('o_mailbox').where(
-        GB.Model.Logic.statement('id', '=', request.mailboxId)
-    );
-
+module.exports = async ({constant, request}) => {
     let instance = await GB.Logic.Incubator.get(request.mailboxId, GB.Common.Constant.Protocol.STMP);
 
     let email = {
@@ -36,17 +32,40 @@ module.exports = async ({request}) => {
             address: request.from.address
         } : undefined,
         subject: request.subject,
-        html: request.html,
-        attachments: request.attachments == undefined ? undefined : request.attachments.map((item) => {
+        html: request.content,
+        'reply-to':,
+        inReplyTo:
+        references: 
+        attachments: request.attachments == undefined ? undefined : request.attachments.map((filePath) => {
             return {
-                filename: path.basename(item.path),
-                path: item.path,
+                filename: path.basename(filePath),
+                path: filePath,
                 cid: GB.Common.Toolbox.uuid()
             }
         })
     }
 
     console.log(email)
+
+    let sendResult = null;
+    try {
+        sendResult = await instance.send(email);
+    }
+    catch (error) {
+        console.log(error)
+        return {
+            state: constant.SendState.FAILED,
+            message: error.message
+        }
+    }
+    
+    console.log(sendResult)
+    //存入已发送箱
+
+    return {
+        state: constant.SendState.SUCCESS
+    }
+    
 }
 
 function toRemotePriority(priority) {
@@ -57,5 +76,26 @@ function toRemotePriority(priority) {
             return GB.Module.Smtp.Priority.LOW;
         case GB.Common.Constant.Mail.Priority.HIGH:
             return GB.Module.Smtp.Priority.HIGH;
+    }
+}
+
+function saveToLocal(serverMessageId, box, from, to, cc, bc, subject, content, priority, attachments) {
+    return {
+        id: GB.Common.Toolbox.uuid(),
+        classify: box,
+        seen: 1, 
+        uniqueIdentifier: JSON.stringify({
+            common: serverMessageId
+        }),
+        from: JSON.stringify([from]),
+        to: JSON.stringify(data.to),
+        cc: data.cc == undefined ? "" : JSON.stringify(cc),
+        bc: data.bc == undefined ? "" : JSON.stringify(bc),
+        subject: subject,
+        priority: priority,
+        sendTime: GB.Common.Toolbox.timeNow(),
+        attachments: JSON.stringify({
+            has: attachments != undefined
+        })
     }
 }

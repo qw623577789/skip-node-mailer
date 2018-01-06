@@ -32,7 +32,7 @@ module.exports = class {
                 obj = await GB.Module.Imap.getinstance({
                     user: mailboxConfig.username,
                     password: mailboxConfig.password,
-                    host: mailboxConfig.receiveServerAddress,
+                    host: mailboxConfig.receiveServerHost,
                     port: mailboxConfig.receiveServerPort,
                     secure: mailboxConfig.receiveUseSSL == 1 ? true:false
                 });
@@ -49,7 +49,7 @@ module.exports = class {
                 obj = await GB.Module.Pop3.getinstance({
                     user: mailboxConfig.username,
                     password: mailboxConfig.password,
-                    host: mailboxConfig.receiveServerAddress,
+                    host: mailboxConfig.receiveServerHost,
                     port: mailboxConfig.receiveServerPort,
                     secure: mailboxConfig.receiveUseSSL == 1 ? true:false
                 });
@@ -66,15 +66,15 @@ module.exports = class {
                 obj = await GB.Module.Smtp.getinstance({
                     user: mailboxConfig.username,
                     password: mailboxConfig.password,
-                    host: mailboxConfig.postServerAddress,
+                    host: mailboxConfig.postServerHost,
                     port: mailboxConfig.postServerPort,
                     secure: mailboxConfig.postUseSSL == 1 ? true:false
                 });
-                await smtp.verify();
+                await obj.verify();
 
                 timer = setInterval(async () => {
                     try {
-                        await smtp.verify();
+                        await obj.verify();
                     }
                     catch (error) {
                         GB.Logger.Runtime.debug(`${mailboxId}_${protocal}:disconnect`)

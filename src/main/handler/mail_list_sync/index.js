@@ -55,6 +55,12 @@ function imapParser(box, {imapUid, data}) {
         id: GB.Common.Toolbox.uuid(),
         classify: box,
         seen: data.flags.indexOf(GB.Module.Imap.SIGN.Seen) != -1 ? 1 : 0, 
+        headers: JSON.stringify(
+            [...data.headers].reduce((headers, item) => {
+                headers[item[0]] = item[1];
+                return headers;
+            }, {})
+        ),
         uniqueIdentifier: JSON.stringify({
             common: data.messageId,
             imap: imapUid
@@ -63,7 +69,7 @@ function imapParser(box, {imapUid, data}) {
         to: JSON.stringify(addressesTranslater(data.to.value)),
         cc: data.cc == undefined ? "" : JSON.stringify(addressesTranslater(data.cc.value)),
         bc: data.bc == undefined ? "" : JSON.stringify(addressesTranslater(data.bc.value)),
-        subject: data.subject,
+        subject: data.subject == undefined ? "": data.subject,
         priority: priorityTranslater(data.headers.get('priority')),
         sendTime: moment(data.date).format('X'),
         attachments: JSON.stringify({
@@ -77,6 +83,7 @@ function pop3Parser(box, {pop3Uid, data}) {
         id: GB.Common.Toolbox.uuid(),
         classify: box,
         seen: 0, 
+        headers: JSON.stringify(data.headers),
         uniqueIdentifier: JSON.stringify({
             common: data.messageId,
             pop3: pop3Uid
@@ -85,7 +92,7 @@ function pop3Parser(box, {pop3Uid, data}) {
         to: JSON.stringify(addressesTranslater(data.to)),
         cc: data.cc == undefined ? "" : JSON.stringify(addressesTranslater(data.cc)),
         bc: data.bc == undefined ? "" : JSON.stringify(addressesTranslater(data.bc)),
-        subject: data.subject,
+        subject: data.subject == undefined ? "": data.subject,
         priority: priorityTranslater(data.priority),
         sendTime: moment(data.date).format('X'),
         attachments: JSON.stringify({
@@ -112,6 +119,6 @@ function priorityTranslater(priority) {
         case 'high':
             return GB.Common.Constant.Mail.Priority.HIGH;
         default:
-            return GB.Common.Constant.Mail.Priority.LOW;
+            return GB.Common.Constant.Mail.Priority.NORMAL;
     }
 }

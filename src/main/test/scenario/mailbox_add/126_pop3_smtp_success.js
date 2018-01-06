@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 module.exports = {
-    name: "添加邮箱(pop3+smtp)，应该成功",
+    name: "添加126邮箱(pop3+smtp)，应该成功",
     prerequisites: [],
     steps: [
         {
@@ -11,15 +11,19 @@ module.exports = {
                 return {
                     username: "mail_tester@126.com",
                     password: "qwe123poi",
-                    receiveState: 1,
-                    receiveProtocol: 1,
-                    receiveUseSSL: 1,
-                    receiveServerAddress: "pop.126.com",
-                    receiveServerPort: 995,
-                    postState: 1,
-                    postUseSSL: 1,
-                    postServerAddress: "smtp.126.com",
-                    postServerPort: 994
+                    receive: {
+                        state: 1,
+                        protocol: 1,
+                        useSSL: 1,
+                        serverHost: "pop.126.com",
+                        serverPort: 995,
+                    },
+                    post: {
+                        state: 1,
+                        useSSL: 1,
+                        serverHost: "smtp.126.com",
+                        serverPort: 994
+                    }
                 };
             },
             handleResponse: function({error, response}, dataset) {

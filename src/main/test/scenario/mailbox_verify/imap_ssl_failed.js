@@ -13,7 +13,7 @@ module.exports = {
                     protocol: GB.Common.Constant.Protocol.IMAP,
                     username: "mail_tester@126.com",
                     password: "qwe123po1i",
-                    address: "imap.126.com",
+                    host: "imap.126.com",
                     port: 993,
                     useSSL: 1
                 }

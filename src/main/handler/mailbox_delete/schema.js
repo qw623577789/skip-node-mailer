@@ -1,7 +1,4 @@
-const request = {
-    type: "string",
-    length: 32
-}
+const request = GB.Common.Schema.common.uuid
 
 const response = {}
 

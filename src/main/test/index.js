@@ -9,8 +9,11 @@ const Tester = require('@qtk/tester-framework');
 class AppExecuter extends Tester.Executer {
     async init() {
         //清除历史数据
-        fsx.removeSync(__dirname + '/test_data_dir');
-        fsx.ensureDirSync(__dirname + '/test_data_dir');
+        fsx.removeSync(GB.Path.Data);
+        fsx.ensureDirSync(GB.Path.Data);
+
+        //建立附件文件夹
+        fsx.ensureDirSync(`${GB.Path.Data}/attachments`);
 
         //建库建表
         await GB.Model.Toolbox.setup(`${GB.Path.Project}/model/definition`, `${GB.Path.Project}/model/config`);

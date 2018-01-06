@@ -37,13 +37,15 @@ module.exports = async ({request}) => {
         let attachment = JSON.parse(mail.attachments);
         return {
             id: mail.id,
-            from: JSON.parse(mail.from),
-            seen: mail.seen,
-            priority: mail.priority,
-            subject: mail.subject,
-            hasAttachment: attachment.has,
-            sendTime: mail.sendTime,
-            content: mail.content
+            intro: {
+                from: JSON.parse(mail.from),
+                seen: mail.seen,
+                priority: mail.priority,
+                subject: mail.subject,
+                hasAttachment: attachment.has,
+                sendTime: mail.sendTime,
+                content: mail.content
+            }
         }
     });
 }

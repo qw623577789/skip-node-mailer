@@ -8,33 +8,18 @@ const constant = {
 const request = {
     type: "object",
     properties: {
-        username: {
-            type: "string",
-            pattern: "^(.+)@(.+)$"
-        },
+        username: GB.Common.Schema.common.email.id,
         password: {
             type: "string",
             pattern: "^(.+)$"
         },
-        protocol: {
-            type: "integer",
-            enum: Object.values(GB.Common.Constant.Protocol)
-        },
-        useSSL: {
-            type: "integer",
-            enum: [0, 1]
-        },
-        address: {
-            type: "string",
-            pattern: "^(.+)$"
-        },
-        port: {
-            type: "integer",
-            default: 0
-        }
+        protocol: GB.Common.Schema.common.mailbox.protocol,
+        useSSL: GB.Common.Schema.common.mailbox.useSSL,
+        host: GB.Common.Schema.common.mailbox.host,
+        port: GB.Common.Schema.common.mailbox.port
     },
     additionalProperties: false,
-    required: ["username", "password", "protocol", "useSSL", "address", "port"],
+    required: ["username", "password", "protocol", "useSSL", "host", "port"],
 
 }
 

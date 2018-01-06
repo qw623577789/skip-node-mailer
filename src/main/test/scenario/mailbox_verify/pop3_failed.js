@@ -13,7 +13,7 @@ module.exports = {
                     protocol: GB.Common.Constant.Protocol.POP3,
                     username: "mail_tester@126.com",
                     password: "qwe123po1i",
-                    address: "pop.126.com",
+                    host: "pop.126.com",
                     port: 110,
                     useSSL: 0
                 }

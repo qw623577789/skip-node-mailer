@@ -13,7 +13,7 @@ module.exports = class Smtp extends EventEmitter{
         host,
         port,
         secure = true, //使用安全传输协议
-        debug = true
+        debug = false
     }) {
         let smtp = nodeMailer.createTransport({
             host,
@@ -77,13 +77,13 @@ module.exports = class Smtp extends EventEmitter{
                 }
             }) : undefined,
             headers : {
-                'X-Priority' : priority,
-                'Disposition-Notification-To' :     `"${notificationTo.name}" <${notificationTo.address}>`//是否需要回执给某人
+                'X-Priority' : priority
             },
             subject,
-            text: html.replace(/<[^>]+>/g,""),
-            html: html,
-            inReplyTo : replyTo,
+            text: html == undefined ? "" : html.replace(/<[^>]+>/g,""),
+            html: html == undefined ? "" : html,
+            inReplyTo : replyTo != undefined ?`${replyTo}` : "", //邮件回复字段
+            references: replyTo != undefined ?`${replyTo}` : "",//邮件回复字段
             attachments : attachments != undefined ? attachments.map((item) => {
                 return {
                     filename : item.filename,
@@ -92,6 +92,11 @@ module.exports = class Smtp extends EventEmitter{
                 }
             }) : undefined
         };
+
+        //是否需要回执给某人
+        if (notificationTo != undefined) {
+            message.headers['Disposition-Notification-To'] =  `"${notificationTo.name}" <${notificationTo.address}>`;
+        }
 
         return new Promise((resolve, reject)=>{
             this._smtp.sendMail(message, (err, data)=>{

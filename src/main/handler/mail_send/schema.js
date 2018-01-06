@@ -1,66 +1,26 @@
+const constant = {
+    SendState: {
+        SUCCESS: 0,
+        FAILED: 1
+    }
+}
+
 const request = {
     type: "object",
     properties: {
-        from: {
-            type: "object",
-            properties: {
-                name: {
-                    type: "string"
-                },
-                address: {
-                    type: "string"
-                }
-            },
-            additionalProperties: false,
-            required: ["name", "address"]
-        },
+        mailboxId: GB.Common.Schema.common.uuid,
+        from: GB.Common.Schema.model.address,
         to: {
             type: "array",
-            items: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
-                    },
-                    address: {
-                        type: "string"
-                    }
-                },
-                additionalProperties: false,
-                required: ["name", "address"]
-            }
+            items: GB.Common.Schema.model.address,
         },
         bc: {
             type: "array",
-            items: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
-                    },
-                    address: {
-                        type: "string"
-                    }
-                },
-                additionalProperties: false,
-                required: ["name", "address"]
-            }
+            items: GB.Common.Schema.model.address,
         },
         cc: {
             type: "array",
-            items: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
-                    },
-                    address: {
-                        type: "string"
-                    }
-                },
-                additionalProperties: false,
-                required: ["name", "address"]
-            }
+            items: GB.Common.Schema.model.address,
         },
         subject: {
             type: "string",
@@ -71,16 +31,66 @@ const request = {
         },
         attachments: {
             type: "array",
-            items: {
+            path: {
                 type: "string"
             }
         },
-        priority: {
-            type: "integer"
+        priority: GB.Common.Schema.common.email.priority,
+        needReply: {
+            type: "boolean"
         }
     },
     additionalProperties: false,
-    required: ['from', 'to', 'priority']
+    required: ['mailboxId', 'from', 'to', 'priority']
 }
 
-module.exports = {request, response}
+const response = {
+    type: "object",
+    switch: [
+        {
+            if: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.SendState.SUCCESS]
+                    }
+                }
+            },
+            then: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.SendState.SUCCESS]
+                    }
+                },
+                additionalProperties: false,
+                required: ['state']
+            }
+        },
+        {
+            if: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.SendState.FAILED]
+                    }
+                }
+            },
+            then: {
+                properties: {
+                    state: {
+                        type: "integer",
+                        enum: [constant.SendState.FAILED]
+                    },
+                    message: {
+                        type: "string"
+                    }
+                },
+                additionalProperties: false,
+                required: ['state', 'message']
+            }
+        }
+    ]
+
+}
+module.exports = {constant, request, response}

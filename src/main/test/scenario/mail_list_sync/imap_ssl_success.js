@@ -3,7 +3,7 @@ const assert = require('assert');
 module.exports = {
     name: "imap_ssl同步邮件列表，应该新邮件数应该返回非0",
     prerequisites: [
-        require('../mailbox_add/imap_smtp_success')
+        require('../mailbox_add/126_imap_smtp_success')
     ],
     steps: [
         {
